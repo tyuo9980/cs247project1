@@ -1,17 +1,22 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include "subject.h"
 #include <vector>
-
+#include "subject.h"
+#include "Deck.h"
+#include "Table.h"
+#include "Player.h"
 class Model : public Subject {
 public:
     Model();
-    
+	void newGame();
+	void endGame();
+	void rageQuit();
+
 private:
+	Table* table_;
     Deck* deck_;
-    Table* table_;
-    Player*[] players_;
+    Player* players_[4];
 };
 
 

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <set>
 #include "Card.h"
 using namespace std;
 
@@ -11,6 +12,7 @@ class Table {
 public:
 	Table();
 	bool playCard(Card*);
+	set<Card> currLegalPlays() const;
 	//std::vector<std::vector<Card*>> playedCards();
 private:
 	// set everything to falses
