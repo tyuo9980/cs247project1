@@ -1,10 +1,12 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef HUMAN_PLAYER_H
+#define HUMAN_PLAYER_H
 
 #include <vector>
-
-class HumanPlayer : Player {
-
+#include "Player.h"
+class HumanPlayer : public Player {
+public:
+	HumanPlayer();
+	bool isHuman() const;
 };
 
 
