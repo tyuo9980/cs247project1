@@ -38,31 +38,30 @@ Table::playCard(Card* card) {
 	}
 }
 
-void 
-Table::print() const{
+ostream 
+&operator<<(std::ostream &sout, const Table &table) {
 	string ranks[13] = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
-	cout << "Clubs:";
+	sout << "Clubs:";
 	for (int i = 0; i < RANK_COUNT; i++) {
-		if (clubs_[i])
-			cout << " " << ranks[i];
+		if (table.clubs_[i])
+			sout << " " << ranks[i];
 	}
-	cout<< endl<< "Diamonds:";
+	sout << endl << "Diamonds:";
 	for (int i = 0; i < RANK_COUNT; i++) {
-		if (diamonds_[i])
-			cout << " " << ranks[i];
+		if (table.diamonds_[i])
+			sout << " " << ranks[i];
 	}
-	cout << endl << "Hearts:";
+	sout << endl << "Hearts:";
 	for (int i = 0; i < RANK_COUNT; i++) {
-		if (hearts_[i])
-			cout << " " << ranks[i];
+		if (table.hearts_[i])
+			sout << " " << ranks[i];
 	}
-	cout << endl << "Spades:";
+	sout << endl << "Spades:";
 	for (int i = 0; i < RANK_COUNT; i++) {
-		if (spades_[i])
-			cout << " " << ranks[i];
+		if (table.spades_[i])
+			sout << " " << ranks[i];
 	}
-	cout << endl;
-	string a;
-	cin >> a;
+	sout << endl;
+	return sout;
 }
 
