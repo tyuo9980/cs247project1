@@ -13,7 +13,7 @@
 
 int main(int argc, const char * argv[]) {
     Model model;
-    Controller controller(&model, &view);
+    Controller controller(&model);
     View view(&controller);
     
     return 0;

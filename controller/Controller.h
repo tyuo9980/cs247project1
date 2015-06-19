@@ -15,11 +15,12 @@ public:
     void deal();
     void addPlayer(std::string);
     void findStarter();
-    bool getPlayedClubs();
-    bool getPlayedDiamonds();
-    bool getPlayedHearts();
-    bool getPlayedSpades();
+    bool* getPlayedClubs();
+    bool* getPlayedDiamonds();
+    bool* getPlayedHearts();
+    bool* getPlayedSpades();
     bool checkGameOver();
+    bool checkHumanPlayer();
     bool playCard(std::string);
     std::string playCard();
     bool discardCard(std::string);
