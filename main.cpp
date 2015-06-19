@@ -16,7 +16,7 @@
 int main(int argc, const char * argv[]) {
     Model model;                                            //create model
     
-    if (argc == 1){
+    if (argc == 2){
         Controller controller(&model, atoi(argv[1]));       //create controller
         View view(&controller);                             //create view - handles input
     }else{

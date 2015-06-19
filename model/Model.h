@@ -48,6 +48,7 @@ public:
 	vector<Card*> getDeck();
 	void checkPlayer();
 	void setSeed(int);
+    vector<int> getWinners();
 private:
 	Table* table_;
     Deck* deck_;

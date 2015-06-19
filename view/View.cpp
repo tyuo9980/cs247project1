@@ -19,7 +19,7 @@ View::~View() {
 void View::printCards(bool cards[]){
     for (int i = 0; i < 13; i++){
         if (cards[i]){
-            cout << cardName_[i] << " ";
+            cout << " " << cardName_[i] ;
         }
     }
 }
@@ -92,19 +92,19 @@ void View::newGame() {
         if (controller_->checkHumanPlayer()){
             //prints stats for human player
             std::cout << "Cards on the table:" << std::endl;
-            std::cout << "Clubs: ";
+            std::cout << "Clubs:";
             printCards(controller_->getPlayedClubs());
             std::cout << std::endl;
             
-            std::cout << "Diamonds: ";
+            std::cout << "Diamonds:";
             printCards(controller_->getPlayedDiamonds());
             std::cout << std::endl;
             
-            std::cout << "Hearts: ";
+            std::cout << "Hearts:";
             printCards(controller_->getPlayedHearts());
             std::cout << std::endl;
             
-            std::cout << "Spades: ";
+            std::cout << "Spades:";
             printCards(controller_->getPlayedSpades());
             std::cout << std::endl;
             
@@ -127,7 +127,7 @@ void View::newGame() {
                     cin >> card;
                     
                     if (controller_->playCard(card)){
-                        std::cout << "Player " << id << " plays " << card << ".";
+                        std::cout << "Player " << id << " plays " << card << "." << endl;
                         break;
                     }
                     else{
@@ -139,7 +139,7 @@ void View::newGame() {
                     cin >> card;
                     
                     if (controller_->discardCard(card)){
-                        std::cout << "Player " << controller_->getPlayerID() << " discards " << card << ".";
+                        std::cout << "Player " << controller_->getPlayerID() << " discards " << card << "." << endl;
                         break;
                     }
                     else{
@@ -155,7 +155,7 @@ void View::newGame() {
                 }
                 else if (cmd == "ragequit"){
                     controller_->ragequit();
-                    cout << "Player " << id << " ragequits. A computer will now take over.";
+                    cout << "Player " << id << " ragequits. A computer will now take over." << endl;
                     break;
                 }
             }

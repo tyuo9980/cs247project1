@@ -58,9 +58,42 @@ bool* Model::getSpades() {
 
 bool Model::isGameOver(){
 	for (int i = 0; i < NUMBER_PLAYERS; ++i) {
-		if (players_[i]->getHand().size() != 0) return false;
+        if (players_[i]->getHand().size() != 0){
+            return false;
+        }
 	}
+    
 	return true;
+}
+
+vector<int> Model::getWinners(){
+    vector<int> winners;
+    bool gameOver = false;
+    int lowest = 9001;
+    
+    for (int i = 0; i < NUMBER_PLAYERS; ++i){
+        int score = players_[i]->getCurrScore() + players_[i]->getOldScore();
+        
+        if (score < lowest){
+            lowest = score;
+        }
+        
+        if (score >= 80){
+            gameOver = true;
+        }
+    }
+    
+    if (gameOver){
+        for (int i = 0; i < NUMBER_PLAYERS; ++i){
+            int score = players_[i]->getCurrScore() + players_[i]->getOldScore();
+            
+            if (score == lowest){
+                winners.push_back(i + 1);
+            }
+        }
+    }
+    
+    return winners;
 }
 
 vector<Card*> Model::getPlayerHand() {
@@ -200,7 +233,9 @@ int Model::getScoreGained(int player) {
 	return players_[player - 1]->getCurrScore();
 }
 
-
 vector<Card*> Model::getPlayerDiscards(int player) {
 	return players_[player - 1]->getDiscard();
 }
+
+
+
