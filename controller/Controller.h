@@ -34,7 +34,6 @@ public:
     void ragequit();
 private:
     Model* model_;
-    View* view_;
 };
 
 

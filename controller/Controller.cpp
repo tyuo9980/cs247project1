@@ -7,88 +7,93 @@ Controller::Controller(Model* m) : model_(m){
 }
 
 void Controller::shuffle(){
-    model_->deck_->shuffle();
+    model_->shuffle();
 }
 
 void Controller::deal(){
-
+    model_->deal();
 }
 
-void addPlayer(std::string){
-
+void Controller::addPlayer(std::string type){
+    if (type == "h"){
+        model_->addHuman();
+    }
+    else{
+        model_->addComputer();
+    }
 }
 
-void findStarter(){
-
+void Controller::findStarter(){
+    model_->findStarter();
 }
 
-bool* getPlayedClubs(){
-    return model_->getTable()->getClubs();
+bool* Controller::getPlayedClubs(){
+    return model_->getClubs();
 }
 
-bool* getPlayedDiamonds(){
-    return model_->getTable()->getDiamonds();
+bool* Controller::getPlayedDiamonds(){
+    return model_->getDiamonds();
 }
 
-bool* getPlayedHearts(){
-    return model_->getTable()->getHearts();
+bool* Controller::getPlayedHearts(){
+    return model_->getHearts();
 }
 
-bool* getPlayedSpades(){
-    return model_->getTable()->getSpades();
+bool* Controller::getPlayedSpades(){
+    return model_->getSpades();
 }
 
-bool checkGameOver(){
-
+bool Controller::checkGameOver(){
+    return model_->isGameOver();
 }
 
-std::vector<Card*> getPlayerHand(){
-
+std::vector<Card*> Controller::getPlayerHand(){
+    return model_->getPlayerHand();
 }
 
-std::vector<Card*> getPlayerLegalPlays(){
-
+std::vector<Card*> Controller::getPlayerLegalPlays(){
+    return model_->getPlayerLegalPlays();
 }
 
 
-bool checkHumanPlayer(){
-
+bool Controller::checkHumanPlayer(){
+    return model_->isHuman();
 }
 
-bool playCard(std::string){
-
+bool Controller::playCard(std::string card){
+    return model_->playCard(card);
 }
 
-std::string playCard(){
-
+std::string Controller::playCard(){
+    return model_->computerPlayCard();
 }
 
-bool discardCard(std::string){
-
+bool Controller::discardCard(std::string card){
+    return model_->discardCard(card)
 }
 
-std::string discardCard(){
-
+std::string Controller::discardCard(){
+    return model_->computerDiscardCard();
 }
 
-bool hasLegalPlay(){
-
+bool Controller::hasLegalPlay(){
+    return model_->hasLegalPlays();
 }
 
-int getPlayerID(){
-
+int Controller::getPlayerID(){
+    return model_->getPlayerID();
 }
 
-std::vector<Card*> getDeck(){
-
+std::vector<Card*> Controller::getDeck(){
+    return model_->getDeck();
 }
 
-void quit(){
-
+void Controller::quit(){
+    model_->quit();
 }
 
-void ragequit(){
-
+void Controller::ragequit(){
+    model_->rageQuit();
 }
 
 
