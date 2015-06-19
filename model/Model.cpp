@@ -85,7 +85,7 @@ bool Model::isHuman() {
 bool Model::playCard(string card){
 	if (card.length() != 2) return false;
 	int rank = validRank(card[0]);
-	int suit = validSuit(card[0]);
+	int suit = validSuit(card[1]);
 
 	if (rank == -1 || suit == -1) return false;
 
@@ -94,7 +94,7 @@ bool Model::playCard(string card){
 	players_[currPlayer_]->playCard(cCard);
 	table_->playCard(cCard);
 	++currPlayer_;
-    
+	checkPlayer();
     return true;
 }
 
@@ -121,7 +121,8 @@ string Model::computerPlayCard(){
 		int suit = static_cast<int>(card->getSuit());
 		return ranks[rank] + suits[suit];
 	}
-
+	currPlayer_++;
+	checkPlayer();
 	return "";
 }
 
@@ -149,7 +150,7 @@ bool Model::discardCard(string card){
 	
 	players_[currPlayer_]->discardCard(cCard);
 	++currPlayer_;
-    
+	checkPlayer();
     return true;
 }
 
@@ -180,4 +181,9 @@ void Model::rageQuit() {
 	delete humanPlayer;
 	players_[currPlayer_] = newPlayer;
 
+}
+
+void Model::checkPlayer() {
+	if (currPlayer_ > NUMBER_PLAYERS - 1)
+		currPlayer_ = 0;
 }

@@ -43,6 +43,7 @@ public:
 	vector<Card*> getPlayerHand();
 	vector<Card*> getPlayerLegalPlays();
 	vector<Card*> getDeck();
+	void checkPlayer();
 private:
 	Table* table_;
     Deck* deck_;
