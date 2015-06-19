@@ -2,8 +2,12 @@
 #include "../model/Model.h"
 #include "../model/Table.h"
 
-Controller::Controller(Model* m) : model_(m){
+//constructor
+Controller::Controller(Model* m) : model_(m){}
 
+//destructor
+Controller::~Controller(){
+    delete model_;
 }
 
 //shuffle deck

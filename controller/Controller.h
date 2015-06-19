@@ -11,6 +11,7 @@ class Card;
 class Controller {
 public:
     Controller(Model*);                         //constructor
+    ~Controller();                              //destructor
     void shuffle();                             //shuffle deck
     void deal();                                //deal cards to players
     void addPlayer(int, std::string);                //add player to list
