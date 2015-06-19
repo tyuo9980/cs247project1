@@ -16,7 +16,7 @@ public:
 	bool* getDiamonds();
 	bool* getHearts();
 	bool* getSpades();
-	set<Card> currLegalPlays() const;
+	vector<Card> currLegalPlays() const;
 	//std::vector<std::vector<Card*>> playedCards();
 private:
 	// set everything to falses

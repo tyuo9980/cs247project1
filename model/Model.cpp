@@ -64,15 +64,14 @@ bool Model::isGameOver(){
 }
 
 vector<Card*> Model::getPlayerHand() {
-	currHand_ = players_[currPlayer_]->getHand();
-	return currHand_;
+	return players_[currPlayer_]->getHand();
 }
 
 vector<Card*> Model::getPlayerLegalPlays() {
-	set<Card> legalPlay = table_->currLegalPlays();
+	vector<Card> legalPlay = table_->currLegalPlays();
 	vector<Card*> playerLegalPlay;
-	for (vector<Card*>::iterator it = currHand_.begin(); it != currHand_.end(); ++it){
-		if (legalPlay.find(**it) != legalPlay.end()) {
+	for (vector<Card*>::const_iterator it = players_[currPlayer_]->getHand().begin(); it != players_[currPlayer_]->getHand().end(); ++it){
+		if (find(legalPlay.begin(), legalPlay.end(), **it) != legalPlay.end()) {
 			playerLegalPlay.push_back(*it);
 		}
 	} 
