@@ -20,8 +20,6 @@ public:
     
 private:
     Controller* controller_;                                    //access to controller
-	Model* model_;
-    
 
     void printCards(bool[]);                                    //print cards given boolean array
     void printCards(std::vector<Card*>);                        //print cards given vector of cards

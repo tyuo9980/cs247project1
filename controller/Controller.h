@@ -31,9 +31,13 @@ public:
     int getPlayerID();                          //returns player number
     std::vector<Card*> getDeck();               //returns list of cards in deck
     std::vector<Card*> getPlayerHand();         //return current player's hand
+    std::vector<Card*> getPlayerDiscards(int);  //return player's discarded cards
     std::vector<Card*> getPlayerLegalPlays();   //return current player's legal moves
     void quit();                                //quits game - deletes pointers
     void ragequit();                            //replaces human with computer player
+    int getOldScore(int);                       //returns score of previous round
+    int getScoreGained(int);                    //returns score of current round
+    std::vector<int> getWinners();              //returns list of winners
 private:
     Model* model_;                              //access to model
 };

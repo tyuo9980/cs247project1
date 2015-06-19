@@ -70,6 +70,11 @@ std::vector<Card*> Controller::getPlayerHand(){
     return model_->getPlayerHand();
 }
 
+//return player's discarded cards
+std::vector<Card*> Controller::getPlayerDiscards(int player){
+    return model_->getPlayerDiscards(player);
+}
+
 //return current player's legal moves
 std::vector<Card*> Controller::getPlayerLegalPlays(){
     return model_->getPlayerLegalPlays();
@@ -123,6 +128,21 @@ void Controller::quit(){
 //ragequit - replace human with computer
 void Controller::ragequit(){
     model_->rageQuit();
+}
+
+//returns score of previous round
+int Controller::getOldScore(int player){
+    return model_->getOldScore(player);
+}
+
+//returns score of current round
+int Controller::getScoreGained(int player){
+    return model_->getScoreGained(player);
+}
+
+//returns list of winners
+std::vector<int> Controller::getWinners(){
+    return model_->getWinners();
 }
 
 
