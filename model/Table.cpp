@@ -81,19 +81,19 @@ Table::currLegalPlays() const{
 	for (int i = 0; i < RANK_COUNT; i++) {
 		if (clubs_[i]) {
 			if (i != RANK_COUNT - 1) legal.push_back(Card(CLUB, static_cast<Rank>(i + 1)));
-			else if (i != 0) legal.push_back(Card(CLUB, static_cast<Rank>(i - 1)));
+			if (i != 0) legal.push_back(Card(CLUB, static_cast<Rank>(i - 1)));
 		}
 		if (diamonds_[i]) {
 			if (i != RANK_COUNT - 1) legal.push_back(Card(DIAMOND, static_cast<Rank>(i + 1)));
-			else if (i != 0) legal.push_back(Card(DIAMOND, static_cast<Rank>(i - 1)));
+			if (i != 0) legal.push_back(Card(DIAMOND, static_cast<Rank>(i - 1)));
 		}
 		if (hearts_[i]) {
 			if (i != RANK_COUNT - 1) legal.push_back(Card(HEART, static_cast<Rank>(i + 1)));
-			else if (i != 0) legal.push_back(Card(HEART, static_cast<Rank>(i - 1)));
+			if (i != 0) legal.push_back(Card(HEART, static_cast<Rank>(i - 1)));
 		}
 		if (spades_[i]) {
 			if (i != RANK_COUNT - 1) legal.push_back(Card(SPADE, static_cast<Rank>(i + 1)));
-			else if (i != 0) legal.push_back(Card(SPADE, static_cast<Rank>(i - 1)));
+			if (i != 0) legal.push_back(Card(SPADE, static_cast<Rank>(i - 1)));
 		}
 	}
 	return legal;

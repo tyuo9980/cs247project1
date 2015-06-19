@@ -15,7 +15,7 @@ using namespace std;
 
 const int NUMBER_PLAYERS = 4;
 const string ranks[RANK_COUNT] = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
-const string suits[SUIT_COUNT] = { "C", "D", "H", "S" };
+const string suits = "CDHS";
 
 class Model {
 public:

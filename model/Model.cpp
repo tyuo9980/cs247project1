@@ -107,7 +107,7 @@ int Model::validRank(char rank) {
 }
 int Model::validSuit(char suit) {
 	for (int i = 0; i < SUIT_COUNT; i++) {
-		if (suit == suits[i][0])
+		if (suit == suits[i])
 			return i;
 	}
 	return -1;
@@ -142,7 +142,7 @@ bool Model::hasLegalPlays() {
 bool Model::discardCard(string card){
 	if (card.length() != 2) return false;
 	int rank = validRank(card[0]);
-	int suit = validSuit(card[0]);
+	int suit = validSuit(card[1]);
 
 	if (rank == -1 || suit == -1) return false;
 
