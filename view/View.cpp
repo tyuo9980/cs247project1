@@ -5,17 +5,11 @@
 #include "../model/Subject.h"
 #include <iostream>
 
-View::View(Controller *c, Model *m) : model_(m), controller_(c) {
-    
+View::View(Controller *c) : controller_(c) {
+    newGame();
 }
 
 View::~View() {}
-
-
-void View::update() {
-
-    
-}
 
 void View::printCards(bool cards[]){
     for (int i = 0; i < 13; i++){
@@ -37,10 +31,11 @@ void View::printCards(vector<Card*> cards){
 }
 
 void View::newGame() {
-    for (int i = 0; i < 4; i++){
+    for (int i = 1; i <= 4; i++){
         string s;
         
-        std::cout << "Is player <x> a human(h) or a computer(c)?" << std::endl << ">";
+        std::cout << "Is player "<< i << " a human(h) or a computer(c)?" << std::endl;
+        std::cout << ">";
         std::cin >> s;
         
         controller_->addPlayer(s);
@@ -56,15 +51,14 @@ void View::newGame() {
     
     while (true){
         std::string cmd;
-        Player player = controller_->currentPlayer();
+        
+        int id = controller_->getPlayerID();
         
         if (controller_->checkGameOver()){
-            
-            
             break;
         }
         
-        if (player.isHuman()){
+        if (controller_->checkHumanPlayer()){
             std::cout << "Cards on the table:" << std::endl;
             std::cout << "Clubs: ";
             printCards(controller_->getPlayedClubs());
@@ -83,11 +77,11 @@ void View::newGame() {
             std::cout << std::endl;
             
             std::cout << "Your hand: ";
-            printCards(player.hand());
+            printCards(controller_->getPlayerHand());
             std::cout << std::endl;
             
-            std::cout << "Legal plays: "
-            printCards(player.legalPlays());
+            std::cout << "Legal plays: ";
+            printCards(controller_->getPlayerLegalPlays());
             std::cout << std::endl;
             std::cout << ">";
             
@@ -95,9 +89,10 @@ void View::newGame() {
             
             if (cmd == "play"){
                 std::string card;
-                if (player.islegalPlay(card)){
-                    player.play(card);
-                    std::cout << "Player " << player.id << " plays" << card << "." << std::endl;
+                cin >> card;
+                
+                if (controller_->playCard(card)){
+                    std::cout << "Player " << id << " plays" << card << "." << std::endl;
                 }
                 else{
                     std::cout << "This is not a legal play." << std::endl;
@@ -105,9 +100,11 @@ void View::newGame() {
                 }
             }
             else if (cmd == "discard"){
-                if (player.hasLegalPlays()){
-                    player.discard(card);
-                    std::cout << "Player " << player.id << " discards" << card << "." << std::endl;
+                std::string card;
+                cin >> card;
+                
+                if (controller_->discardCard(card)){
+                    std::cout << "Player " << controller_->getPlayerID() << " discards" << card << "." << std::endl;
                 }
                 else{
                     std::cout << "You have a legal play. You may not discard." << std::endl;
@@ -118,21 +115,22 @@ void View::newGame() {
                 printCards(controller_->getDeck());
             }
             else if (cmd == "quit"){
+                controller_->quit();
                 break;
             }
             else if (cmd == "ragequit"){
-                cout << "Player " << player.id << " ragequits. A computer will now take over." << endl;
-                player = new ComputerPlayer(player);
+                controller_->ragequit();
+                cout << "Player " << id << " ragequits. A computer will now take over." << endl;
             }
         }
         else{
-            if (player.hasLegalPlays()){
-                string card = player.play();
-                cout << "Player " << player.id << " plays " << card << "." << endl;
+            if (controller_->hasLegalPlay()){
+                std::string card = controller_->playCard();
+                cout << "Player " << id << " plays " << card << "." << endl;
             }
             else{
-                string card = player.discard();
-                cout << "Player " << player.id << " discards " << card << "." << endl;
+                std::string card = controller_->discardCard();
+                cout << "Player " << id << " discards " << card << "." << endl;
             }
         }
     }

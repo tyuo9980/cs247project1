@@ -3,13 +3,15 @@
 
 #include "Observer.h"
 #include <string>
+#include <vector>
 
 class Controller;
 class Model;
+class Card;
 
 class View {
 public:
-    View( Controller*, Model* );
+    View(Controller*);
     virtual ~View();
     virtual void update();	// Observer Pattern: concrete update() method
     
@@ -23,6 +25,7 @@ private:
     const std::string cardName_[13] = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
 
     void printCards(bool[]);
+    void printCards(std::vector<Card*>);
     void newGame();
     
 }; // View
