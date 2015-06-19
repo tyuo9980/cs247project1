@@ -16,13 +16,14 @@ public:
 	void addCards(Card*);
     void playCard(Card);
     void discardCard(Card);
-
+	void resetPlayer();
 	//void setHand(std::vector<Card*>&);
 	//void setDiscard(std::vector<Card*>&);
 	//void setScore(int);
 
 private:
-    int score_;
+    int currScore_;
+	int oldScore_;
 	std::vector<Card*>::const_iterator findCard(Card);
     std::vector<Card*> hand_;
     std::vector<Card*> discard_;

@@ -4,11 +4,11 @@
 using namespace std;
 
 
-Player::Player() : score_(0) {}
+Player::Player() : currScore_(0), oldScore_(0) {}
 
 //Player::Player(const Player& player) : score_(player.getScore()), hand_(player.getHand()), discard_(player.getDiscard()){}
 Player::Player(int score, std::vector<Card*> hand, std::vector<Card*> discard) : hand_(hand), discard_(discard) {
-	score_ = score;
+	currScore_ = score;
 }
 
 
@@ -18,7 +18,7 @@ Player::getHand() const{
 }
 
 int Player::getScore() const{
-	return score_;
+	return currScore_;
 }
 
 const vector<Card*>& 
@@ -42,7 +42,7 @@ Player::discardCard(Card card) {
 	if (it != hand_.end()){
 		discard_.push_back(*it);
 		hand_.erase(it);
-		score_ += (int)card.getRank() + 1;
+		currScore_ += (int)card.getRank() + 1;
 	}
 }
 
@@ -73,4 +73,11 @@ Player::findCard(Card card) {
 
 void Player::addCards(Card* card){
 	hand_.push_back(card);
+}
+
+void Player::resetPlayer() {
+	oldScore_ = currScore_;
+	currScore_ = 0;
+	hand_.clear();
+	discard_.clear();
 }
