@@ -116,9 +116,9 @@ bool Model::isHuman() {
 }
 
 bool Model::playCard(string card){
-	if (card.length() != 2) return false;
-	int rank = validRank(card[0]);
-	int suit = validSuit(card[1]);
+	if (!(card.length() == 2 || card.length() == 3)) return false;
+	int rank = validRank(card.substr(0, card.length() - 1));
+	int suit = validSuit(card[card.length() - 1]);
 
 	if (rank == -1 || suit == -1) return false;
 
@@ -131,9 +131,9 @@ bool Model::playCard(string card){
     return true;
 }
 
-int Model::validRank(char rank) {
+int Model::validRank(string rank) {
 	for (int i = 0; i < RANK_COUNT; i++) {
-		if (rank == ranks[i][0])
+		if (rank == ranks[i])
 			return i;
 	}
 	return -1;
@@ -173,9 +173,9 @@ bool Model::hasLegalPlays() {
 }
 
 bool Model::discardCard(string card){
-	if (card.length() != 2) return false;
-	int rank = validRank(card[0]);
-	int suit = validSuit(card[1]);
+	if (!(card.length() == 2 || card.length() == 3)) return false;
+	int rank = validRank(card.substr(0, card.length() - 1));
+	int suit = validSuit(card[card.length() - 1]);
 
 	if (rank == -1 || suit == -1) return false;
 

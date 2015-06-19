@@ -54,7 +54,7 @@ private:
     Deck* deck_;
 	Player* players_[NUMBER_PLAYERS];
 	int currPlayer_;
-	int validRank(char);
+	int validRank(string);
 	int validSuit(char);
 	bool isLegalPlay(Card);
 };
