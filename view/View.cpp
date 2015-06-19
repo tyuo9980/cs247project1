@@ -28,9 +28,12 @@ void View::printCards(bool cards[]){
 //print cards given vector of cards
 void View::printCards(vector<Card*> cards){
     for (int i = 0; i < cards.size(); i++){
-        if (cards[i]){
-            cout << cardName_[i] << " ";
+        cout << *cards.at(i);
+        
+        if (i < cards.size() - 1){
+            cout << " ";
         }
+        
         if ((i + 1) % 13 == 0){
             cout << endl;
         }
@@ -94,46 +97,51 @@ void View::newGame() {
             
             std::cout << "Legal plays: ";
             printCards(controller_->getPlayerLegalPlays());
-            std::cout << std::endl;
-            std::cout << ">";
             
-            std::cin >> cmd;
-            
-            //handles commands
-            if (cmd == "play"){
-                std::string card;
-                cin >> card;
+            while (true){
+                std::cout << std::endl;
+                std::cout << ">";
                 
-                if (controller_->playCard(card)){
-                    std::cout << "Player " << id << " plays" << card << "." << std::endl;
-                }
-                else{
-                    std::cout << "This is not a legal play." << std::endl;
-                    std::cout << "<";
-                }
-            }
-            else if (cmd == "discard"){
-                std::string card;
-                cin >> card;
+                std::cin >> cmd;
                 
-                if (controller_->discardCard(card)){
-                    std::cout << "Player " << controller_->getPlayerID() << " discards" << card << "." << std::endl;
+                //handles commands
+                if (cmd == "play"){
+                    std::string card;
+                    cin >> card;
+                    
+                    if (controller_->playCard(card)){
+                        std::cout << "Player " << id << " plays" << card << "." << std::endl;
+                        break;
+                    }
+                    else{
+                        std::cout << "This is not a legal play." << std::endl;
+                        std::cout << "<";
+                    }
                 }
-                else{
-                    std::cout << "You have a legal play. You may not discard." << std::endl;
-                    std::cout << ">";
+                else if (cmd == "discard"){
+                    std::string card;
+                    cin >> card;
+                    
+                    if (controller_->discardCard(card)){
+                        std::cout << "Player " << controller_->getPlayerID() << " discards" << card << "." << std::endl;
+                        break;
+                    }
+                    else{
+                        std::cout << "You have a legal play. You may not discard." << std::endl;
+                        std::cout << ">";
+                    }
                 }
-            }
-            else if (cmd == "deck"){
-                printCards(controller_->getDeck());
-            }
-            else if (cmd == "quit"){
-                controller_->quit();
-                break;
-            }
-            else if (cmd == "ragequit"){
-                controller_->ragequit();
-                cout << "Player " << id << " ragequits. A computer will now take over." << endl;
+                else if (cmd == "deck"){
+                    printCards(controller_->getDeck());
+                }
+                else if (cmd == "quit"){
+                    controller_->quit();
+                }
+                else if (cmd == "ragequit"){
+                    controller_->ragequit();
+                    cout << "Player " << id << " ragequits. A computer will now take over." << endl;
+                    break;
+                }
             }
         }
         else{

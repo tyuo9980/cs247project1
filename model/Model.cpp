@@ -94,6 +94,8 @@ bool Model::playCard(string card){
 	players_[currPlayer_]->playCard(cCard);
 	table_->playCard(cCard);
 	++currPlayer_;
+    
+    return true;
 }
 
 int Model::validRank(char rank) {
@@ -147,6 +149,8 @@ bool Model::discardCard(string card){
 	
 	players_[currPlayer_]->discardCard(cCard);
 	++currPlayer_;
+    
+    return true;
 }
 
 string Model::computerDiscardCard() {
