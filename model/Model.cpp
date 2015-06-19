@@ -187,3 +187,7 @@ void Model::checkPlayer() {
 	if (currPlayer_ > NUMBER_PLAYERS - 1)
 		currPlayer_ = 0;
 }
+
+void Model::setSeed(int s){
+	deck_->setSeed(s);
+}

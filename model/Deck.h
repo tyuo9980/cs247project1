@@ -13,8 +13,10 @@ public:
 	~Deck();
 	vector<Card*> getDeck() const;
 	void shuffle();
+	void setSeed(int);
 	static const int CARD_COUNT = 52;
 private:
+	int seed_;
 	vector<Card*> deck_;
 };
 

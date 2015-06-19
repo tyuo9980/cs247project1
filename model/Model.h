@@ -44,6 +44,7 @@ public:
 	vector<Card*> getPlayerLegalPlays();
 	vector<Card*> getDeck();
 	void checkPlayer();
+	void setSeed(int);
 private:
 	Table* table_;
     Deck* deck_;

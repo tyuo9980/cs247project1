@@ -16,8 +16,7 @@ Deck::~Deck(){
 
 void 
 Deck::shuffle(){
-	int seed = 0;
-	static mt19937 rng(seed);
+	static mt19937 rng(seed_);
 
 	int n = CARD_COUNT;
 
@@ -48,4 +47,8 @@ ostream &operator<<(std::ostream &sout, const Deck &deck) {
 		}
 	}
 	return sout;
+}
+
+void Deck::setSeed(int s) {
+	seed_ = s;
 }
