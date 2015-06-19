@@ -14,7 +14,7 @@ using namespace std;
 
 const int NUMBER_PLAYERS = 4;
 
-class Model : public Subject {
+class Model {
 public:
     Model();
 	void newGame(int, bool[]);

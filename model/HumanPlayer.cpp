@@ -2,7 +2,6 @@
 
 HumanPlayer::HumanPlayer() :Player(){}
 
-bool 
-HumanPlayer::isHuman() const {
+bool HumanPlayer::isHuman() const {
 	return true;
 }

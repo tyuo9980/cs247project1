@@ -5,6 +5,7 @@
 #include <vector>
 #include <set>
 #include "Card.h"
+
 using namespace std;
 
 class Table {

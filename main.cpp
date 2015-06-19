@@ -7,9 +7,14 @@
 //
 
 #include <iostream>
+#include "model/Model.h"
+#include "view/View.h"
+#include "controller/Controller.h"
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    Model model;
+    Controller controller( &model );
+    View view( &controller, &model );
+    
     return 0;
 }

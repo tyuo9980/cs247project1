@@ -3,8 +3,7 @@
 
 Model::Model() : table_(NULL), deck_(NULL), gameOver_(false) {}
 
-void 
-Model::newGame(int seed, bool players[]) {
+void Model::newGame(int seed, bool players[]) {
 	// prepare all the players
 	for (int i = 0; i < NUMBER_PLAYERS; ++i) {
 		if (players[i]) 
@@ -13,6 +12,7 @@ Model::newGame(int seed, bool players[]) {
 			players_.insert(pair<int, Player*>(i, new ComputerPlayer()));
 	}
 	deck_->shuffle();
+    
 	// distribute cards
 			// first time entering the loop check for 7 of spades
 	// game loop
@@ -33,8 +33,7 @@ Model::newGame(int seed, bool players[]) {
 
 }
 
-void 
-Model::distributeCards(){
+void Model::distributeCards(){
 	Player* currPlayer = players_.find(;
 	for (int i = 0; i < RANK_COUNT; ++i) {
 	
