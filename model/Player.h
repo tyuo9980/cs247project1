@@ -7,9 +7,10 @@
 class Player {
 public:
     Player();
-	Player(int, std::vector<Card*>, std::vector<Card*>);
+	Player(int,int, std::vector<Card*>, std::vector<Card*>);
 	//Player(const Player&);
-	int getScore() const;
+	int getCurrScore() const;
+	int getOldScore() const;
 	const std::vector<Card*>& getHand() const;
 	const std::vector<Card*>& getDiscard() const;
 	virtual bool isHuman() const = 0;

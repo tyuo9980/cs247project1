@@ -7,8 +7,9 @@ using namespace std;
 Player::Player() : currScore_(0), oldScore_(0) {}
 
 //Player::Player(const Player& player) : score_(player.getScore()), hand_(player.getHand()), discard_(player.getDiscard()){}
-Player::Player(int score, std::vector<Card*> hand, std::vector<Card*> discard) : hand_(hand), discard_(discard) {
+Player::Player(int score, int oldScore, std::vector<Card*> hand, std::vector<Card*> discard) : hand_(hand), discard_(discard) {
 	currScore_ = score;
+	oldScore_ = oldScore;
 }
 
 
@@ -17,8 +18,11 @@ Player::getHand() const{
 	return hand_;
 }
 
-int Player::getScore() const{
+int Player::getCurrScore() const{
 	return currScore_;
+}
+int Player::getOldScore() const {
+	return oldScore_;
 }
 
 const vector<Card*>& 

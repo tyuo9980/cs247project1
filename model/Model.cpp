@@ -191,3 +191,16 @@ void Model::checkPlayer() {
 void Model::setSeed(int s){
 	deck_->setSeed(s);
 }
+
+int Model::getOldScore(int player) {
+	return players_[player - 1]->getOldScore();
+}
+
+int Model::getScoreGained(int player) {
+	return players_[player - 1]->getCurrScore();
+}
+
+
+vector<Card*> Model::getPlayerDiscards(int player) {
+	return players_[player - 1]->getDiscard();
+}

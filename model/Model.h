@@ -29,6 +29,8 @@ public:
 	void quit();
 	void rageQuit();
 	int getPlayerID();
+	int getOldScore(int);
+	int getScoreGained(int);
 	bool playCard(string);
 	bool discardCard(string);
 	string computerPlayCard();
@@ -42,6 +44,7 @@ public:
 	bool hasLegalPlays();
 	vector<Card*> getPlayerHand();
 	vector<Card*> getPlayerLegalPlays();
+	vector<Card*> getPlayerDiscards(int);
 	vector<Card*> getDeck();
 	void checkPlayer();
 	void setSeed(int);

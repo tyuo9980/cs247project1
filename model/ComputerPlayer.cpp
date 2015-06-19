@@ -4,7 +4,7 @@
 
 ComputerPlayer::ComputerPlayer() :Player(){}
 
-ComputerPlayer::ComputerPlayer(const HumanPlayer& human):Player(human.getScore(), human.getHand(), human.getDiscard()) {}
+ComputerPlayer::ComputerPlayer(const HumanPlayer& human):Player(human.getCurrScore(), human.getOldScore(), human.getHand(), human.getDiscard()) {}
 
 bool ComputerPlayer::isHuman() const {
 	return false;
