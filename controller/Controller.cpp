@@ -5,6 +5,11 @@
 //constructor
 Controller::Controller(Model* m) : model_(m){}
 
+//constructor
+Controller::Controller(Model* m, int s) : model_(m){
+    model_->setSeed(s);
+}
+
 //destructor
 Controller::~Controller(){
     delete model_;
