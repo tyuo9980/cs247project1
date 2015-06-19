@@ -87,7 +87,7 @@ std::string Controller::playCard(){
 
 //human - discard card
 bool Controller::discardCard(std::string card){
-    return model_->discardCard(card)
+	return model_->discardCard(card);
 }
 
 //computer - discard card

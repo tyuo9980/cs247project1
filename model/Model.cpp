@@ -24,16 +24,16 @@ int Model::getPlayerID() {
 	return (currPlayer_ + 1);
 }
 
-void Model::addHuman() {
+void Model::addHuman(int i) {
 	assert(counter_ < NUMBER_PLAYERS);
 	HumanPlayer* player = new HumanPlayer();
-	players_[counter_] = player;
+	players_[i+1] = player;
 	++counter_;
 }
-void Model::addComputer(){
+void Model::addComputer(int i){
 	assert(counter_ < NUMBER_PLAYERS);
 	ComputerPlayer* player = new ComputerPlayer();
-	players_[counter_] = player;
+	players_[i+1] = player;
 	++counter_;
 }
 void Model::findStarter() {
@@ -84,7 +84,7 @@ vector<Card*> Model::getPlayerLegalPlays() {
 }
 
 bool Model::isHuman() {
-	players_[currPlayer_]->isHuman();
+	return players_[currPlayer_]->isHuman();
 }
 
 bool Model::playCard(string card){
@@ -130,13 +130,13 @@ string Model::computerPlayCard(){
 
 bool Model::isLegalPlay(Card card) {
 	vector<Card*> legalPlays = getPlayerLegalPlays();
-	for (vector<Card*>::iterator it = legalPlays.begin(); legalPlays.end; ++it) {
+	for (vector<Card*>::iterator it = legalPlays.begin(); it != legalPlays.end(); ++it) {
 		if (**it == card) return true;
 	}
 	return false;
 }
 
-bool Model::hasLegalPlay() {
+bool Model::hasLegalPlays() {
 	vector<Card*> legalPlays = getPlayerLegalPlays();
 	return (legalPlays.size() != 0);
 }

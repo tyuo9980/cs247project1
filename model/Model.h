@@ -14,6 +14,8 @@
 using namespace std;
 
 const int NUMBER_PLAYERS = 4;
+const string ranks[RANK_COUNT] = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+const string suits[SUIT_COUNT] = { "C", "D", "H", "S" };
 
 class Model {
 public:
@@ -21,8 +23,8 @@ public:
 	~Model();
 	void shuffle();
 	void deal();
-	void addHuman();
-	void addComputer();
+	void addHuman(int);
+	void addComputer(int);
 	void findStarter();
 	void quit();
 	void rageQuit();
@@ -37,7 +39,7 @@ public:
 	bool* getSpades();
 	bool isGameOver();
 	bool isHuman();
-	bool hasLegalPlay();
+	bool hasLegalPlays();
 	vector<Card*> getPlayerHand();
 	vector<Card*> getPlayerLegalPlays();
 	vector<Card*> getDeck();
@@ -48,8 +50,6 @@ private:
 	int currPlayer_;
 	vector<Card*> currHand_;
 	int counter_;
-	const string ranks[RANK_COUNT] = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
-	const string suits[SUIT_COUNT] = {"C", "D" , "H" , "S"};
 	int validRank(char);
 	int validSuit(char);
 	bool isLegalPlay(Card);

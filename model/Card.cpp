@@ -18,7 +18,12 @@ Rank Card::getRank() const{
 bool operator==(const Card &a, const Card &b){
 	return a.getSuit() == b.getSuit() && a.getRank() == b.getRank();
 }
-
+bool operator> (const Card &a, const Card &b) {
+	return a.getSuit() > b.getSuit() && a.getRank() > b.getRank();
+}
+bool operator< (const Card &a, const Card &b) {
+	return a.getSuit() < b.getSuit() && a.getRank() < b.getRank();
+}
 std::ostream &operator<<(std::ostream &out, const Card &c){
     std::string suits[SUIT_COUNT] = {"C", "D", "H", "S"};
     std::string ranks[RANK_COUNT] = {"A", "2", "3", "4", "5", "6",
@@ -52,3 +57,5 @@ std::istream &operator>>(std::istream &in, Card &c){
 	
 	return in;
 }
+
+
