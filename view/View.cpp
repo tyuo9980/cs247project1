@@ -47,8 +47,6 @@ void View::newGame() {
 
     std::cout << "A new round begins. It’s player <x>’s turn to play." << std::endl;
     
-    
-    
     while (true){
         std::string cmd;
         
