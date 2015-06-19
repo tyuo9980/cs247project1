@@ -12,7 +12,6 @@ View::View(Controller *c) : controller_(c) {
 
 //destructor
 View::~View() {
-    delete model_;
     delete controller_;
 }
 
@@ -69,7 +68,25 @@ void View::newGame() {
         
         //checks for game status - game is over or new round
         if (controller_->checkGameOver()){
-            break;
+            for (int i = 0; i < 4; i++){
+                int oldScore = controller_->getOldScore(i + 1);
+                int scoreGained = controller_->getScoreGained(i + 1);
+                
+                std::cout << "Player " << i << "’s discards: ";
+                printCards(controller_->getPlayerDiscards(i + 1));
+                std::cout << endl;
+                std::cout << "Player " << i << "’s score: ";
+                std::cout << oldScore << " + " << scoreGained << " = " << oldScore + scoreGained << std::endl;
+            }
+            
+            vector<int> winners = controller_->getWinners();
+            for (int i = 0 ; i < winners.size(); i++){
+                std::cout << "Player " << winners.at(i) << " wins!" << endl;
+            }
+            
+            if (winners.size() > 0){
+                break;
+            }
         }
         
         if (controller_->checkHumanPlayer()){
@@ -110,7 +127,7 @@ void View::newGame() {
                     cin >> card;
                     
                     if (controller_->playCard(card)){
-                        std::cout << "Player " << id << " plays" << card << ".";
+                        std::cout << "Player " << id << " plays " << card << ".";
                         break;
                     }
                     else{
@@ -122,7 +139,7 @@ void View::newGame() {
                     cin >> card;
                     
                     if (controller_->discardCard(card)){
-                        std::cout << "Player " << controller_->getPlayerID() << " discards" << card << ".";
+                        std::cout << "Player " << controller_->getPlayerID() << " discards " << card << ".";
                         break;
                     }
                     else{
