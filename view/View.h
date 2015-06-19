@@ -11,23 +11,21 @@ class Card;
 
 class View {
 public:
-    View(Controller*);
-    virtual ~View();
-    virtual void update();	// Observer Pattern: concrete update() method
+    View(Controller*);                                          //contructor
+    ~View();                                                    //destructor
     
 private:
-    // Observer Pattern: to access Model accessors without having to downcast subject
-    Model* model_;
+    Controller* controller_;                                    //access to controller
     
-    // Strategy Pattern member (plus signal handlers)
-    Controller* controller_;
-    
-    const std::string cardName_[13] = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+    const std::string cardName_[13] = {"A", "2", "3",
+                                        "4", "5", "6",
+                                        "7", "8", "9",
+                                        "10", "J", "Q", "K"};   //mapping of card number to name
 
-    void printCards(bool[]);
-    void printCards(std::vector<Card*>);
-    void newGame();
+    void printCards(bool[]);                                    //print cards given boolean array
+    void printCards(std::vector<Card*>);                        //print cards given vector of cards
+    void newGame();                                             //starts game - main loop
     
-}; // View
+};
 
 #endif

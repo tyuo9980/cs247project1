@@ -17,12 +17,12 @@ void Controller::deal(){
 }
 
 //add player to list
-void Controller::addPlayer(std::string type){
+void Controller::addPlayer(int i, std::string type){
     if (type == "h"){
-        model_->addHuman();
+        model_->addHuman(i);
     }
     else{
-        model_->addComputer();
+        model_->addComputer(i);
     }
 }
 

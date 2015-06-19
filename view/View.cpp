@@ -5,12 +5,18 @@
 #include "../model/Subject.h"
 #include <iostream>
 
+//constructor
 View::View(Controller *c) : controller_(c) {
     newGame();
 }
 
-View::~View() {}
+//destructor
+View::~View() {
+    delete model_;
+    delete controller_;
+}
 
+//print cards given boolean array
 void View::printCards(bool cards[]){
     for (int i = 0; i < 13; i++){
         if (cards[i]){
@@ -19,6 +25,7 @@ void View::printCards(bool cards[]){
     }
 }
 
+//print cards given vector of cards
 void View::printCards(vector<Card*> cards){
     for (int i = 0; i < cards.size(); i++){
         if (cards[i]){
@@ -30,33 +37,40 @@ void View::printCards(vector<Card*> cards){
     }
 }
 
+//starts game - main loop
 void View::newGame() {
+    
+    // adds players to game
     for (int i = 1; i <= 4; i++){
-        string s;
+        string type;
         
         std::cout << "Is player "<< i << " a human(h) or a computer(c)?" << std::endl;
         std::cout << ">";
-        std::cin >> s;
+        std::cin >> type;
         
-        controller_->addPlayer(s);
+        controller_->addPlayer(i, type);
     }
     
+    //init methods - shuffle, deal, and find starting player
     controller_->shuffle();
     controller_->deal();
     controller_->findStarter();
 
     std::cout << "A new round begins. It’s player <x>’s turn to play." << std::endl;
     
+    //main game loop
     while (true){
         std::string cmd;
         
         int id = controller_->getPlayerID();
         
+        //checks for game status - game is over or new round
         if (controller_->checkGameOver()){
             break;
         }
         
         if (controller_->checkHumanPlayer()){
+            //prints stats for human player
             std::cout << "Cards on the table:" << std::endl;
             std::cout << "Clubs: ";
             printCards(controller_->getPlayedClubs());
@@ -85,6 +99,7 @@ void View::newGame() {
             
             std::cin >> cmd;
             
+            //handles commands
             if (cmd == "play"){
                 std::string card;
                 cin >> card;
@@ -122,6 +137,7 @@ void View::newGame() {
             }
         }
         else{
+            //computer player
             if (controller_->hasLegalPlay()){
                 std::string card = controller_->playCard();
                 cout << "Player " << id << " plays " << card << "." << endl;

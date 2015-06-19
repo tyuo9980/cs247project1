@@ -12,9 +12,9 @@
 #include "controller/Controller.h"
 
 int main(int argc, const char * argv[]) {
-    Model model;
-    Controller controller(&model);
-    View view(&controller);
+    Model model;                        //create model
+    Controller controller(&model);      //create controller
+    View view(&controller);             //create view - handles input
     
     return 0;
 }
