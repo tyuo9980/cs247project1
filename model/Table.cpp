@@ -2,10 +2,8 @@
 #include <iostream>
 #include <string>
 #include "Table.h"
-
 // if return true: the card is played and added on the tbale successfully
 // return false: the suit of the card goes weird
-
 Table::Table(){
 	for (int i = 0; i < RANK_COUNT; i++) {
 		clubs_[i] = false;
@@ -14,10 +12,10 @@ Table::Table(){
 		spades_[i] = false;
 	}
 }
-
-bool Table::playCard(Card* card) {
-	Suit suit = card->getSuit();
-	Rank rank = card->getRank();
+bool
+Table::playCard(Card card) {
+	Suit suit = card.getSuit();
+	Rank rank = card.getRank();
 	switch(suit) {
 		case CLUB:
 			assert (clubs_[rank] == false);
@@ -40,7 +38,8 @@ bool Table::playCard(Card* card) {
 	}
 }
 
-ostream &operator<<(std::ostream &sout, const Table &table) {
+ostream 
+&operator<<(std::ostream &sout, const Table &table) {
 	string ranks[13] = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
 	sout << "Clubs:";
 	for (int i = 0; i < RANK_COUNT; i++) {
@@ -66,7 +65,8 @@ ostream &operator<<(std::ostream &sout, const Table &table) {
 	return sout;
 }
 
-set<Card> Table::currLegalPlays() const{
+set<Card> 
+Table::currLegalPlays() const{
 	set<Card> legal;
 
 	if (clubs_[SEVEN] == false) legal.insert(Card(CLUB, SEVEN));
@@ -93,4 +93,17 @@ set<Card> Table::currLegalPlays() const{
 		}
 	}
 	return legal;
+}
+
+bool* Table::getClubs() {
+	return clubs_;
+}
+bool* Table::getDiamonds(){
+	return diamonds_;
+}
+bool* Table::getHearts(){
+	return hearts_;
+}
+bool* Table::getSpades(){
+	return spades_;
 }

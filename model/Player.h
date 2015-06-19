@@ -11,12 +11,10 @@ public:
 	//Player(const Player&);
     ~Player();
 	int getScore() const;
-	void dealtCard(std::vector<Card*>);
 	const std::vector<Card*>& getHand() const;
 	const std::vector<Card*>& getDiscard() const;
 	virtual bool isHuman() const = 0;
-
-protected:
+	void addCards(Card*);
     void playCard(Card);
     void discardCard(Card);
 

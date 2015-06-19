@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <map>
+#include <string>
 #include "HumanPlayer.h"
 #include "ComputerPlayer.h"
 #include "subject.h"
@@ -17,17 +18,41 @@ const int NUMBER_PLAYERS = 4;
 class Model {
 public:
     Model();
-	void newGame(int, bool[]);
-	void distributeCards();
-	void gameLoop();
-	void endGame();
+	~Model();
+	void shuffle();
+	void deal();
+	void addHuman();
+	void addComputer();
+	void findStarter();
+	void quit();
 	void rageQuit();
-
-private:	
-	bool gameOver_;
+	int getPlayerID();
+	bool playCard(string);
+	bool discardCard(string);
+	string computerPlayCard();
+	string computerDiscardCard();
+	bool* getClubs();
+	bool* getDiamonds();
+	bool* getHearts();
+	bool* getSpades();
+	bool isGameOver();
+	bool isHuman();
+	bool hasLegalPlay();
+	vector<Card*> getPlayerHand();
+	vector<Card*> getPlayerLegalPlays();
+	vector<Card*> getDeck();
+private:
 	Table* table_;
     Deck* deck_;
-	map<int, Player*> players_;
+	Player* players_[NUMBER_PLAYERS];
+	int currPlayer_;
+	vector<Card*> currHand_;
+	int counter_;
+	const string ranks[RANK_COUNT] = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+	const string suits[SUIT_COUNT] = {"C", "D" , "H" , "S"};
+	int validRank(char);
+	int validSuit(char);
+	bool isLegalPlay(Card);
 };
 
 

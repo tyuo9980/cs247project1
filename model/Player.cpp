@@ -21,17 +21,6 @@ int Player::getScore() const{
 	return score_;
 }
 
-void Player::dealtCard(vector<Card*> cards) {
-	hand_.clear();
-	discard_.clear();
-
-	for (vector<Card*>::const_iterator it = cards.begin(); it != cards.end(); ++it){
-		hand_.push_back(*it);
-	}
-
-}
-
-
 const vector<Card*>& 
 Player::getDiscard() const{
 	return discard_;
@@ -81,3 +70,7 @@ Player::findCard(Card card) {
 //Player::setScore(int score){
 //	score_ = score;
 //}
+
+void Player::addCards(Card* card){
+	hand_.push_back(card);
+}

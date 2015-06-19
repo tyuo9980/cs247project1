@@ -5,14 +5,17 @@
 #include <vector>
 #include <set>
 #include "Card.h"
-
 using namespace std;
 
 class Table {
 	friend ostream &operator<<(std::ostream &sout, const Table &t);
 public:
 	Table();
-	bool playCard(Card*);
+	bool playCard(Card);
+	bool* getClubs();
+	bool* getDiamonds();
+	bool* getHearts();
+	bool* getSpades();
 	set<Card> currLegalPlays() const;
 	//std::vector<std::vector<Card*>> playedCards();
 private:
