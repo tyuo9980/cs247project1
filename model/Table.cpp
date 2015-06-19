@@ -69,10 +69,14 @@ set<Card>
 Table::currLegalPlays() const{
 	set<Card> legal;
 
-	if (clubs_[SEVEN] == false) legal.insert(Card(CLUB, SEVEN));
-	if (diamonds_[SEVEN] == false) legal.insert(Card(DIAMOND, SEVEN));
-	if (hearts_[SEVEN] == false) legal.insert(Card(HEART, SEVEN));
-	if (spades_[SEVEN] == false) legal.insert(Card(SPADE, SEVEN));
+	if (clubs_[SEVEN] == false) 
+		legal.insert(Card(CLUB, SEVEN));
+	if (diamonds_[SEVEN] == false) 
+		legal.insert(Card(DIAMOND, SEVEN));
+	if (hearts_[SEVEN] == false) 
+		legal.insert(Card(HEART, SEVEN));
+	if (spades_[SEVEN] == false) 
+		legal.insert(Card(SPADE, SEVEN));
 	
 	for (int i = 0; i < RANK_COUNT; i++) {
 		if (clubs_[i]) {

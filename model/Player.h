@@ -9,7 +9,6 @@ public:
     Player();
 	Player(int, std::vector<Card*>, std::vector<Card*>);
 	//Player(const Player&);
-    ~Player();
 	int getScore() const;
 	const std::vector<Card*>& getHand() const;
 	const std::vector<Card*>& getDiscard() const;

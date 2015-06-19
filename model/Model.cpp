@@ -2,7 +2,7 @@
 #include "Model.h"
 
 
-Model::Model() : table_(new Table), deck_(new Deck), counter_(0){
+Model::Model() : table_(new Table), deck_(new Deck){
 	for (int i = 0; i < NUMBER_PLAYERS; i++) {
 		players_[i] = NULL;
 	}
@@ -25,23 +25,19 @@ int Model::getPlayerID() {
 }
 
 void Model::addHuman(int i) {
-	assert(counter_ < NUMBER_PLAYERS);
 	HumanPlayer* player = new HumanPlayer();
-	players_[i+1] = player;
-	++counter_;
+	players_[i-1] = player;
 }
 void Model::addComputer(int i){
-	assert(counter_ < NUMBER_PLAYERS);
 	ComputerPlayer* player = new ComputerPlayer();
-	players_[i+1] = player;
-	++counter_;
+	players_[i-1] = player;
 }
 void Model::findStarter() {
 	vector<Card*> currDeck = deck_->getDeck();
 	Card starterCard = Card(SPADE, SEVEN);
 	for (int i = 0; i < deck_->CARD_COUNT; ++i) {
 		if (*currDeck.at(i) == starterCard) {
-			currPlayer_ = i / NUMBER_PLAYERS;
+			currPlayer_ = i / RANK_COUNT;
 			return;
 		}
 	}

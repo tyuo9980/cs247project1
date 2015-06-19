@@ -56,7 +56,7 @@ void View::newGame() {
     controller_->deal();
     controller_->findStarter();
 
-    std::cout << "A new round begins. It’s player <x>’s turn to play." << std::endl;
+	std::cout << "A new round begins. It's player " << controller_->getPlayerID() << "'s turn to play." << std::endl;
     
     //main game loop
     while (true){

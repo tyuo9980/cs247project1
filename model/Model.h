@@ -49,7 +49,6 @@ private:
 	Player* players_[NUMBER_PLAYERS];
 	int currPlayer_;
 	vector<Card*> currHand_;
-	int counter_;
 	int validRank(char);
 	int validSuit(char);
 	bool isLegalPlay(Card);
