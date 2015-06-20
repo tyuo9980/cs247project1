@@ -21,8 +21,8 @@ void Controller::deal(){
 }
 
 //add player to list
-void Controller::addPlayer(int i, std::string type){
-    if (type == "h"){
+void Controller::addPlayer(int i, char type){
+    if (type == 'h'){
         model_->addHuman(i);
     }
     else{

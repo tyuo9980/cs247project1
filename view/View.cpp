@@ -1,8 +1,10 @@
+#include <cassert>
+#include <iostream>
 #include "Observer.h"
 #include "View.h"
 #include "../controller/Controller.h"
 #include "../model/Model.h"
-#include <iostream>
+
 
 //constructor
 View::View(Controller *c) : controller_(c) {
@@ -39,12 +41,12 @@ void View::newGame() {
     
     // adds players to game
     for (int i = 1; i <= 4; i++){
-        string type;
+        char type;
         
         std::cout << "Is player "<< i << " a human(h) or a computer(c)?" << std::endl;
         std::cout << ">";
         std::cin >> type;
-        
+		assert(type == 'c' || type == 'h');
         controller_->addPlayer(i, type);
     }
     
