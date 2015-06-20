@@ -78,16 +78,20 @@ ostream &operator<<(std::ostream &sout, const Table &table) {
 vector<Card> Table::currLegalPlays() const{
 	vector<Card> legal;
     
-    //allows all 7's
+	// if 7S is not yet played, then its the only legal play
+	if (spades_[SEVEN] == false)  {
+		legal.push_back(Card(SPADE, SEVEN));
+		return legal;
+	}
+
+    //allows all other 7's
 	if (clubs_[SEVEN] == false) 
 		legal.push_back(Card(CLUB, SEVEN));
 	if (diamonds_[SEVEN] == false) 
 		legal.push_back(Card(DIAMOND, SEVEN));
 	if (hearts_[SEVEN] == false) 
 		legal.push_back(Card(HEART, SEVEN));
-	if (spades_[SEVEN] == false) 
-		legal.push_back(Card(SPADE, SEVEN));
-	
+
     //finds all adjacent cards
 	for (int i = 0; i < RANK_COUNT; i++) {
 		if (clubs_[i]) {
