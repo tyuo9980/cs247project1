@@ -20,6 +20,7 @@ void View::printCards(bool cards[]){
 
 //print cards given vector of cards
 void View::printCards(vector<Card*> cards){
+	if (cards.size() == 0) return;
     for (int i = 0; i < cards.size(); i++){
         cout << *cards.at(i);
         
