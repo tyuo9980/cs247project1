@@ -1,6 +1,6 @@
 CXX = g++ # variables and initialization
 CXXFLAGS = -g -Wall -MMD # builds dependency lists in .d ﬁles
-OBJECTS = main.o ./controller/Controller.o ./view/View.o ./model/Card.o ./model/Player.o ./model/ComputerPlayer.o ./model/HumanPlayer.o ./model/Table.o ./model/Deck.o
+OBJECTS = main.o ./controller/Controller.o ./view/View.o ./model/Card.o ./model/Player.o ./model/ComputerPlayer.o ./model/HumanPlayer.o ./model/Table.o ./model/Deck.o ./model/Model.o
 DEPENDS = ${OBJECTS:.o=.d} # substitute ".o" with ".d"
 EXEC = straights
 
