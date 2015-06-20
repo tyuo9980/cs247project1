@@ -6,7 +6,6 @@
 #include <string>
 #include "HumanPlayer.h"
 #include "ComputerPlayer.h"
-#include "subject.h"
 #include "Deck.h"
 #include "Table.h"
 #include "Player.h"

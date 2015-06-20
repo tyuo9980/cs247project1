@@ -2,7 +2,6 @@
 #include "View.h"
 #include "../controller/Controller.h"
 #include "../model/Model.h"
-#include "../model/Subject.h"
 #include <iostream>
 
 //constructor
