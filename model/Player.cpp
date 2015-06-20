@@ -14,20 +14,6 @@ Player::Player(int score, int oldScore, std::vector<Card*> hand, std::vector<Car
 	oldScore_ = oldScore;
 }
 
-//destructor
-Player::~Player(){
-    int clen = hand_.size();
-    int dlen = discard_.size();
-    
-    for (int i = 0; i < clen; i++){
-        delete hand_[i];
-    }
-    
-    for (int i = 0; i < dlen; i++){
-        delete discard_[i];
-    }
-}
-
 //accessor for list of cards in hand
 const vector<Card*>& Player::getHand() const{
 	return hand_;

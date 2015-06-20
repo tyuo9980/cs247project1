@@ -10,11 +10,6 @@ View::View(Controller *c) : controller_(c) {
     newGame();
 }
 
-//destructor
-View::~View() {
-    delete controller_;
-}
-
 //print cards given boolean array
 void View::printCards(bool cards[]){
     for (int i = 0; i < 13; i++){
@@ -79,8 +74,6 @@ void View::newGame() {
                 std::cout << oldScore << " + " << scoreGained << " = " << oldScore + scoreGained << std::endl;
             }
             
-            controller_->resetRound();
-            
             vector<int> winners = controller_->getWinners();
             for (int i = 0 ; i < winners.size(); i++){
                 std::cout << "Player " << winners.at(i) << " wins!" << endl;
@@ -89,6 +82,8 @@ void View::newGame() {
             if (winners.size() > 0){
                 break;
             }
+            
+            controller_->resetRound();
         }
         
         if (controller_->checkHumanPlayer()){
@@ -153,7 +148,7 @@ void View::newGame() {
                 }
                 else if (cmd == "quit"){
                     controller_->quit();
-                    break;
+                    return;
                 }
                 else if (cmd == "ragequit"){
                     controller_->ragequit();

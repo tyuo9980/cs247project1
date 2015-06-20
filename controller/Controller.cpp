@@ -10,11 +10,6 @@ Controller::Controller(Model* m, int s) : model_(m){
     model_->setSeed(s);
 }
 
-//destructor
-Controller::~Controller(){
-    delete model_;
-}
-
 //shuffle deck
 void Controller::shuffle(){
     model_->shuffle();

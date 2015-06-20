@@ -8,7 +8,6 @@ class Player {
 public:
     Player();                                                   //constructor
 	Player(int,int, std::vector<Card*>, std::vector<Card*>);    //constructor - copies cards and scores
-    ~Player();                                                  //destructor
 	int getCurrScore() const;                                   //current score accessor
 	int getOldScore() const;                                    //old score accessor
 	const std::vector<Card*>& getHand() const;                  //returns list of cards in hand

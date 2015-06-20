@@ -11,9 +11,9 @@ Deck::Deck() {
 
 //destructor
 Deck::~Deck(){
-	for (vector<Card*>::const_iterator it = deck_.begin(); it != deck_.end(); ++it) {
-		delete *it;
-	}
+    for (int i = 0; i < deck_.size(); i++){
+        delete deck_.at(i);
+    }
 }
 
 //shuffles deck

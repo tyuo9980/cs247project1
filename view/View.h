@@ -16,7 +16,6 @@ const std::string cardName_[13] = {"A", "2", "3",
 class View {
 public:
     View(Controller*);                                          //contructor
-    ~View();                                                    //destructor
     
 private:
     Controller* controller_;                                    //access to controller
