@@ -140,7 +140,7 @@ vector<Card*> Model::getPlayerLegalPlays() {
 	vector<Card> legalPlay = table_->currLegalPlays();
 	vector<Card*> playerLegalPlay;
 	for (vector<Card*>::const_iterator it = players_[currPlayer_]->getHand().begin(); it != players_[currPlayer_]->getHand().end(); ++it){
-		if (find(legalPlay.begin(), legalPlay.end(), **it) != legalPlay.end()) {
+		if (std::find(legalPlay.begin(), legalPlay.end(), **it) != legalPlay.end()) {
 			playerLegalPlay.push_back(*it);
 		}
 	} 
