@@ -68,10 +68,10 @@ void View::newGame() {
                 int oldScore = controller_->getOldScore(i);
                 int scoreGained = controller_->getScoreGained(i);
                 
-                std::cout << "Player " << i << "’s discards: ";
+				std::cout << "Player " << i << "'s discards: ";
                 printCards(controller_->getPlayerDiscards(i));
                 std::cout << endl;
-                std::cout << "Player " << i << "’s score: ";
+				std::cout << "Player " << i << "'s score: ";
                 std::cout << oldScore << " + " << scoreGained << " = " << oldScore + scoreGained << std::endl;
             }
             
