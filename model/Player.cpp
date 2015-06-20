@@ -86,7 +86,7 @@ void Player::addCards(Card* card){
 
 //reset hand, score, and discard
 void Player::resetPlayer() {
-	oldScore_ = currScore_;
+	oldScore_ += currScore_;
 	currScore_ = 0;
 	hand_.clear();
 	discard_.clear();
