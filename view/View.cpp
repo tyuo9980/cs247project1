@@ -60,6 +60,7 @@ void View::newGame() {
         std::string cmd;
         
         int id = controller_->getPlayerID();
+        bool human = controller_->checkHumanPlayer();
         
         //checks for game status - game is over or new round
         if (controller_->checkGameOver()){
@@ -86,7 +87,7 @@ void View::newGame() {
             controller_->resetRound();
         }
         
-        if (controller_->checkHumanPlayer()){
+        if (human){
             //prints stats for human player
             std::cout << "Cards on the table:" << std::endl;
             std::cout << "Clubs:";
@@ -158,7 +159,7 @@ void View::newGame() {
         }
         
         //computer player
-        if (!controller_->checkHumanPlayer()){
+        if (!human){
             if (controller_->hasLegalPlay()){
                 std::string card = controller_->playCard();
                 cout << "Player " << id << " plays " << card << "." << endl;
