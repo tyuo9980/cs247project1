@@ -4,18 +4,27 @@
 #include "Table.h"
 // if return true: the card is played and added on the tbale successfully
 // return false: the suit of the card goes weird
+//constructor
 Table::Table(){
-	for (int i = 0; i < RANK_COUNT; i++) {
-		clubs_[i] = false;
-		diamonds_[i] = false;
-		hearts_[i] = false;
-		spades_[i] = false;
-	}
+    resetTable();
 }
-bool
-Table::playCard(Card card) {
+
+//clears table - sets all played cards to false
+void Table::resetTable(){
+    for (int i = 0; i < RANK_COUNT; i++) {
+        clubs_[i] = false;
+        diamonds_[i] = false;
+        hearts_[i] = false;
+        spades_[i] = false;
+    }
+}
+
+//play a card to the table
+bool Table::playCard(Card card) {
 	Suit suit = card.getSuit();
 	Rank rank = card.getRank();
+    
+    //sets played card to true
 	switch(suit) {
 		case CLUB:
 			assert (clubs_[rank] == false);
@@ -38,8 +47,8 @@ Table::playCard(Card card) {
 	}
 }
 
-ostream 
-&operator<<(std::ostream &sout, const Table &table) {
+//output override - prints cards on table
+ostream &operator<<(std::ostream &sout, const Table &table) {
 	string ranks[13] = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
 	sout << "Clubs:";
 	for (int i = 0; i < RANK_COUNT; i++) {
@@ -65,10 +74,11 @@ ostream
 	return sout;
 }
 
-vector<Card>
-Table::currLegalPlays() const{
+//finds current turn's legal plays based on cards on table
+vector<Card> Table::currLegalPlays() const{
 	vector<Card> legal;
-
+    
+    //allows all 7's
 	if (clubs_[SEVEN] == false) 
 		legal.push_back(Card(CLUB, SEVEN));
 	if (diamonds_[SEVEN] == false) 
@@ -78,6 +88,7 @@ Table::currLegalPlays() const{
 	if (spades_[SEVEN] == false) 
 		legal.push_back(Card(SPADE, SEVEN));
 	
+    //finds all adjacent cards
 	for (int i = 0; i < RANK_COUNT; i++) {
 		if (clubs_[i]) {
 			if (i != RANK_COUNT - 1) legal.push_back(Card(CLUB, static_cast<Rank>(i + 1)));
@@ -99,6 +110,7 @@ Table::currLegalPlays() const{
 	return legal;
 }
 
+//accessor for played cards on table
 bool* Table::getClubs() {
 	return clubs_;
 }

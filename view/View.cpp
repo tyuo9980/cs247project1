@@ -68,16 +68,18 @@ void View::newGame() {
         
         //checks for game status - game is over or new round
         if (controller_->checkGameOver()){
-            for (int i = 0; i < 4; i++){
-                int oldScore = controller_->getOldScore(i + 1);
-                int scoreGained = controller_->getScoreGained(i + 1);
+            for (int i = 1; i <= 4; i++){
+                int oldScore = controller_->getOldScore(i);
+                int scoreGained = controller_->getScoreGained(i);
                 
                 std::cout << "Player " << i << "’s discards: ";
-                printCards(controller_->getPlayerDiscards(i + 1));
+                printCards(controller_->getPlayerDiscards(i));
                 std::cout << endl;
                 std::cout << "Player " << i << "’s score: ";
                 std::cout << oldScore << " + " << scoreGained << " = " << oldScore + scoreGained << std::endl;
             }
+            
+            controller_->resetRound();
             
             vector<int> winners = controller_->getWinners();
             for (int i = 0 ; i < winners.size(); i++){
@@ -139,7 +141,7 @@ void View::newGame() {
                     cin >> card;
                     
                     if (controller_->discardCard(card)){
-                        std::cout << "Player " << controller_->getPlayerID() << " discards " << card << "." << endl;
+                        std::cout << "Player " << id << " discards " << card << "." << endl;
                         break;
                     }
                     else{
@@ -161,8 +163,8 @@ void View::newGame() {
             }
         }
         
+        //computer player
         if (!controller_->checkHumanPlayer()){
-            //computer player
             if (controller_->hasLegalPlay()){
                 std::string card = controller_->playCard();
                 cout << "Player " << id << " plays " << card << "." << endl;

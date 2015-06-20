@@ -3,10 +3,11 @@
 
 #include <vector>
 #include "Player.h"
+
 class HumanPlayer : public Player {
 public:
-	HumanPlayer();
-	bool isHuman() const;
+	HumanPlayer();                      //constructor
+	bool isHuman() const;               //check if player is human
 };
 
 

@@ -7,9 +7,9 @@
 
 class ComputerPlayer : public Player {
 public:
-	ComputerPlayer();
-	ComputerPlayer(const HumanPlayer&);
-	bool isHuman() const;
+	ComputerPlayer();                       //constructor
+	ComputerPlayer(const HumanPlayer&);     //copy constructor
+	bool isHuman() const;                   //checks if player is a computer
 };
 
 

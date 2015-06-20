@@ -12,20 +12,20 @@ class Card{
 	friend std::istream &operator>>(std::istream &, Card &);
 
 public:
-	Card(Suit, Rank);
-	Suit getSuit() const;
-	Rank getRank() const;
+	Card(Suit, Rank);                                       //constructor
+	Suit getSuit() const;                                   //suit accessor
+	Rank getRank() const;                                   //rank accessor
 	
 private:
-	Suit suit_;
-	Rank rank_;
+	Suit suit_;                                             //suit member var
+	Rank rank_;                                             //rank member var
 };
 
-bool operator==(const Card &, const Card &);
-bool operator> (const Card &, const Card &);
-bool operator< (const Card &, const Card &);
+bool operator==(const Card &, const Card &);                //equality override
+bool operator> (const Card &, const Card &);                //greater than override
+bool operator< (const Card &, const Card &);                //less than override
 //output/input Card in the format <rank><suit>
-std::ostream &operator<<(std::ostream &, const Card &);
-std::istream &operator>>(std::istream &, Card &);
+std::ostream &operator<<(std::ostream &, const Card &);     //output card
+std::istream &operator>>(std::istream &, Card &);           //input card
 
 #endif

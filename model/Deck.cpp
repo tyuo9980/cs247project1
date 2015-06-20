@@ -1,5 +1,6 @@
 #include "Deck.h"
 
+//constructor
 Deck::Deck() {
 	for (int i = 0; i < SUIT_COUNT; i++){
 		for (int j = 0; j < RANK_COUNT; j++){
@@ -7,15 +8,16 @@ Deck::Deck() {
 		}
 	}
 }
+
+//destructor
 Deck::~Deck(){
 	for (vector<Card*>::const_iterator it = deck_.begin(); it != deck_.end(); ++it) {
 		delete *it;
 	}
 }
 
-
-void 
-Deck::shuffle(){
+//shuffles deck
+void Deck::shuffle(){
 	static mt19937 rng(seed_);
 
 	int n = CARD_COUNT;
@@ -29,10 +31,12 @@ Deck::shuffle(){
 	}
 }
 
+//deck accessor
 vector<Card*> Deck::getDeck() const{
 	return deck_;
 }
 
+//ostream override - prints out deck
 ostream &operator<<(std::ostream &sout, const Deck &deck) {
 	int counter = 0;
 	for (vector<Card*>::const_iterator it = deck.deck_.begin(); it != deck.deck_.end(); ++it) {
@@ -49,6 +53,7 @@ ostream &operator<<(std::ostream &sout, const Deck &deck) {
 	return sout;
 }
 
+//seed setter
 void Deck::setSeed(int s) {
 	seed_ = s;
 }

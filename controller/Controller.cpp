@@ -65,6 +65,11 @@ bool Controller::checkGameOver(){
     return model_->isGameOver();
 }
 
+//resets variables for new round
+void Controller::resetRound(){
+    model_->resetRound();
+}
+
 //return current player's hand
 std::vector<Card*> Controller::getPlayerHand(){
     return model_->getPlayerHand();

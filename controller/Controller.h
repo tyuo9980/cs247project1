@@ -22,6 +22,7 @@ public:
     bool* getPlayedHearts();                    //return list of played hearts on table
     bool* getPlayedSpades();                    //return list of played spades on table
     bool checkGameOver();                       //check current state of game, includes reshuffling if needed
+    void resetRound();                          //resets variables for new round
     bool checkHumanPlayer();                    //check if the player is human or computer
     bool playCard(std::string);                 //human - play a card
     std::string playCard();                     //computer - play a card

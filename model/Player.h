@@ -6,28 +6,28 @@
 
 class Player {
 public:
-    Player();
-	Player(int,int, std::vector<Card*>, std::vector<Card*>);
-	//Player(const Player&);
-	int getCurrScore() const;
-	int getOldScore() const;
-	const std::vector<Card*>& getHand() const;
-	const std::vector<Card*>& getDiscard() const;
-	virtual bool isHuman() const = 0;
-	void addCards(Card*);
-    void playCard(Card);
-    void discardCard(Card);
-	void resetPlayer();
+    Player();                                                   //constructor
+	Player(int,int, std::vector<Card*>, std::vector<Card*>);    //constructor - copies cards and scores
+    ~Player();                                                  //destructor
+	int getCurrScore() const;                                   //current score accessor
+	int getOldScore() const;                                    //old score accessor
+	const std::vector<Card*>& getHand() const;                  //returns list of cards in hand
+	const std::vector<Card*>& getDiscard() const;               //returns list of discarded cards
+	virtual bool isHuman() const = 0;                           //checks if player is human
+	void addCards(Card*);                                       //add cards to hand
+    void playCard(Card);                                        //plays a card
+    void discardCard(Card);                                     //discard a card
+	void resetPlayer();                                         //resets player hand, discard, and scores
 	//void setHand(std::vector<Card*>&);
 	//void setDiscard(std::vector<Card*>&);
 	//void setScore(int);
 
 private:
-    int currScore_;
-	int oldScore_;
-	std::vector<Card*>::const_iterator findCard(Card);
-    std::vector<Card*> hand_;
-    std::vector<Card*> discard_;
+    int currScore_;                                             //current score data memeber
+	int oldScore_;                                              //old score data member
+	std::vector<Card*>::const_iterator findCard(Card);          //find card iterator
+    std::vector<Card*> hand_;                                   //list of cards in hand data member
+    std::vector<Card*> discard_;                                //list of discarded cards data member
 };
 
 
