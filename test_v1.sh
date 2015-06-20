@@ -17,7 +17,7 @@ echo "please enter test case max, in the form of lol*"
 read max_t
 
 rm -r $TESTOUTPUT
-mkdir $TESTCASE
+mkdir $TESTOUTPUT
 
 for ((i=$min; i<=$max; i++))
 do
