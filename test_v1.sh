@@ -19,6 +19,9 @@ read max_t
 rm -r $TESTOUTPUT
 mkdir $TESTOUTPUT
 
+chmod 777 straights
+chmod 777 sample
+
 for ((i=$min; i<=$max; i++))
 do
     for ((j=$min_t; j<=$max_t; j++))
