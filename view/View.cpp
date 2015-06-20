@@ -1,6 +1,5 @@
 #include <cassert>
 #include <iostream>
-#include "Observer.h"
 #include "View.h"
 #include "../controller/Controller.h"
 #include "../model/Model.h"
