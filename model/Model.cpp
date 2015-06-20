@@ -96,6 +96,7 @@ void Model::resetRound(){
     
     deck_->shuffle();
     deal();
+    findStarter();
 }
 
 //returns list of winners - searches for lowest score
