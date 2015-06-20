@@ -58,10 +58,7 @@ void View::newGame() {
     //main game loop
     while (true){
         std::string cmd;
-        
-        int id = controller_->getPlayerID();
-        bool human = controller_->checkHumanPlayer();
-        
+
         //checks for game status - game is over or new round
         if (controller_->checkGameOver()){
             for (int i = 1; i <= 4; i++){
@@ -81,11 +78,16 @@ void View::newGame() {
             }
             
             if (winners.size() > 0){
-                break;
+                return;
             }
             
             controller_->resetRound();
+            
+            std::cout << "A new round begins. It's player " << controller_->getPlayerID() << "'s turn to play." << std::endl;
         }
+        
+        int id = controller_->getPlayerID();
+        bool human = controller_->checkHumanPlayer();
         
         if (human){
             //prints stats for human player
