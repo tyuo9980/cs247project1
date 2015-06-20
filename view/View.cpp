@@ -147,7 +147,6 @@ void View::newGame() {
                     printCards(controller_->getDeck());
                 }
                 else if (cmd == "quit"){
-                    controller_->quit();
                     return;
                 }
                 else if (cmd == "ragequit"){
