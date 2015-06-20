@@ -271,7 +271,6 @@ void Model::rageQuit() {
 	HumanPlayer* humanPlayer = dynamic_cast<HumanPlayer*>(formerPlayer);
 	ComputerPlayer* newPlayer = new ComputerPlayer(*humanPlayer);
 	delete formerPlayer;
-	delete humanPlayer;
 	players_[currPlayer_] = newPlayer;
 
 }
