@@ -24,7 +24,7 @@ public:
 private:
     int currScore_;                                             //current score data memeber
 	int oldScore_;                                              //old score data member
-	std::vector<Card*>::const_iterator findCard(Card);          //find card iterator
+	std::vector<Card*>::iterator findCard(Card);          //find card iterator
     std::vector<Card*> hand_;                                   //list of cards in hand data member
     std::vector<Card*> discard_;                                //list of discarded cards data member
 };

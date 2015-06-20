@@ -36,7 +36,7 @@ const vector<Card*>& Player::getDiscard() const{
 
 //plays card
 void Player::playCard(Card card) {
-	vector<Card*>::const_iterator it = findCard(card);
+	vector<Card*>::iterator it = findCard(card);
 	if (it != hand_.end()){
 		hand_.erase(it);
         //delete *it;
@@ -46,7 +46,7 @@ void Player::playCard(Card card) {
 
 //discards card
 void Player::discardCard(Card card) {
-	vector<Card*>::const_iterator it = findCard(card);
+	vector<Card*>::iterator it = findCard(card);
 	if (it != hand_.end()){
 		discard_.push_back(*it);
 		hand_.erase(it);
@@ -55,8 +55,8 @@ void Player::discardCard(Card card) {
 }
 
 //find if card exists in hand
-vector<Card*>::const_iterator Player::findCard(Card card) {
-	for (vector<Card*>::const_iterator it = hand_.begin(); it != hand_.end(); ++it) {
+vector<Card*>::iterator Player::findCard(Card card) {
+	for (vector<Card*>::iterator it = hand_.begin(); it != hand_.end(); ++it) {
 		if (card == **it) {
 			return it;
 		}
