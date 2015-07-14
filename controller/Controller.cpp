@@ -5,11 +5,6 @@
 //constructor
 Controller::Controller(Model* m) : model_(m){}
 
-//constructor
-Controller::Controller(Model* m, int s) : model_(m){
-    model_->setSeed(s);
-}
-
 //shuffle deck
 void Controller::shuffle(){
     model_->shuffle();

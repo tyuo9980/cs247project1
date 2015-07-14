@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include "Subject.h"
 #include "HumanPlayer.h"
 #include "ComputerPlayer.h"
 #include "Deck.h"
@@ -16,7 +17,7 @@ const int NUMBER_PLAYERS = 4;               //max number of players
 const string ranks[RANK_COUNT] = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" }; //maps card rank
 const string suits = "CDHS";                //maps card suit
 
-class Model {
+class Model : public Subject{
 public:
     Model();                                //constructor
 	~Model();                               //destructor

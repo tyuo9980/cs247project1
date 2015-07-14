@@ -11,7 +11,6 @@ class Card;
 class Controller {
 public:
     Controller(Model*);                         //constructor
-    Controller(Model*, int);                    //constructor
     void shuffle();                             //shuffle deck
     void deal();                                //deal cards to players
     void addPlayer(int, char);           //add player to list
