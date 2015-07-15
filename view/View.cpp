@@ -3,36 +3,82 @@
 #include "View.h"
 #include "../controller/Controller.h"
 #include "../model/Model.h"
-#include "../model/subject.h"
+#include "../model/Subject.h"
+#include <gtkmm.h>
 
 //constructor
-View::View(Controller *c, Model *m) : controller_(c), model_(m), panels(true, 10), butBox(true, 10), next_button("next"), reset_button("reset"), card(gui_.null()) {
-    
-    // Sets some properties of the window.
+View::View(Controller *c, Model *m) : controller_(c), model_(m){
     set_title("Straights!");
     set_border_width( 10 );
     
-    // Add panels to the window
-    add(panels);
+    add(vBox);
     
-    // Add button box and card image to the panels
-    panels.add( butBox );
-    panels.add( card );
-    card.set(gui_.null());
+    vBox.add(controlPanel);
+    vBox.add(table);
+    vBox.add(players);
+    vBox.add(hand);
     
-    // Add buttons to the box (a container). Buttons initially invisible
-    butBox.add( next_button );
-    butBox.add( reset_button );
+    controlPanel.add(newGame);
+    controlPanel.add(seed);
+    controlPanel.add(endGame);
+    newGame.set_label("new game");
+    endGame.set_label("end game");
+    
+    table.add(clubs);
+    table.add(diamonds);
+    table.add(hearts);
+    table.add(spades);
+    clubs.set_spacing(10);
+    clubs.set_border_width(5);
+    diamonds.set_spacing(10);
+    diamonds.set_border_width(5);
+    hearts.set_spacing(10);
+    hearts.set_border_width(5);
+    spades.set_spacing(10);
+    spades.set_border_width(5);
+    for (int i = 0; i < 13; i++){
+        clubs.add(club[i]);
+        diamonds.add(diamond[i]);
+        hearts.add(heart[i]);
+        spades.add(spade[i]);
+        
+        club[i].set(gui_.null());
+        diamond[i].set(gui_.null());
+        heart[i].set(gui_.null());
+        spade[i].set(gui_.null());
+    }
+    
+    for (int i = 0; i < 4; i++){
+        players.add(player[i]);
+        player[i].add(name[i]);
+        player[i].add(rage[i]);
+        player[i].add(points[i]);
+        player[i].add(discards[i]);
+        
+        name[i].set_label("Player " + to_string(i));
+        rage[i].set_label("Rage");
+        points[i].set_label("Points: 0");
+        discards[i].set_label("Discards: 0");
+    }
+    
+    hand.set_spacing(10);
+    for (int i = 0; i < 13; i++){
+        hand.add(playerCards[i]);
+        playerCards[i].set(gui_.null());
+    }
     
     show_all();
     
-    //model_->subscribe(this);
-    //newGame();
+    model_->subscribe(this);
+    //startGame();
 }
 
 View::~View(){}
 
-void View::update(){}
+void View::update(){
+
+
+}
 
 //print cards given boolean array
 void View::printCards(bool cards[]){
@@ -60,7 +106,7 @@ void View::printCards(vector<Card*> cards){
 }
 
 //starts game - main loop
-void View::newGame() {
+void View::startGame() {
     
     // adds players to game
     for (int i = 1; i <= 4; i++){

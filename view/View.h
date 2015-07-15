@@ -28,15 +28,39 @@ private:
     
     Gui gui_;
     
-    Gtk::HBox panels;                                           // Main window divided into two horizontal panels
-    Gtk::VBox butBox;                                           // Vertical boxes for stacking buttons vertically
-    Gtk::Button next_button;
-    Gtk::Button reset_button;
-    Gtk::Image card;
+    Gtk::VBox vBox;                                             // Main window divided into 4 components
+    
+    Gtk::VBox suits;
+    Gtk::HBox hearts;
+    Gtk::HBox spades;
+    Gtk::HBox diamonds;
+    Gtk::HBox clubs;
+    
+    Gtk::HBox controlPanel;
+    Gtk::VBox table;
+    Gtk::HBox players;
+    Gtk::VBox player[4];
+    Gtk::HBox hand;
+    
+    Gtk::Button newGame;
+    Gtk::Entry seed;
+    Gtk::Button endGame;
+    
+    Gtk::Image heart[13];
+    Gtk::Image spade[13];
+    Gtk::Image diamond[13];
+    Gtk::Image club[13];
+    
+    Gtk::Label name[4];
+    Gtk::Button rage[4];
+    Gtk::Label points[4];
+    Gtk::Label discards[4];
+    
+    Gtk::Image playerCards[13];
 
     void printCards(bool[]);                                    //print cards given boolean array
     void printCards(std::vector<Card*>);                        //print cards given vector of cards
-    void newGame();                                             //starts game - main loop
+    void startGame();                                             //starts game - main loop
     
 };
 
