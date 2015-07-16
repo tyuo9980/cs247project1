@@ -115,6 +115,11 @@ std::vector<Card*> Controller::getDeck(){
     return model_->getDeck();
 }
 
+//saves game
+void Controller::save(){
+
+}
+
 //quits game - deletes pointers
 void Controller::quit(){
     model_->quit();

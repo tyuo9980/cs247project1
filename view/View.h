@@ -58,6 +58,10 @@ private:
     
     Gtk::Image playerCards[13];
 
+    void newGameClicked();
+    void endGameClicked();
+    void rageClicked();
+    
     void printCards(bool[]);                                    //print cards given boolean array
     void printCards(std::vector<Card*>);                        //print cards given vector of cards
     void startGame();                                             //starts game - main loop

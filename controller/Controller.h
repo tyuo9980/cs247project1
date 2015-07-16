@@ -32,6 +32,7 @@ public:
     std::vector<Card*> getPlayerHand();         //return current player's hand
     std::vector<Card*> getPlayerDiscards(int);  //return player's discarded cards
     std::vector<Card*> getPlayerLegalPlays();   //return current player's legal moves
+    void save();                                //saves game
     void quit();                                //quits game - deletes pointers
     void ragequit();                            //replaces human with computer player
     int getOldScore(int);                       //returns score of previous round

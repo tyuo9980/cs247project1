@@ -67,6 +67,12 @@ View::View(Controller *c, Model *m) : controller_(c), model_(m){
         playerCards[i].set(gui_.null());
     }
     
+    newGame.signal_clicked().connect(sigc::mem_fun(*this, &View::newGameClicked));
+    endGame.signal_clicked().connect(sigc::mem_fun(*this, &View::endGameClicked));
+    for (int i = 0; i < 4; i++){
+        rage[i].signal_clicked().connect(sigc::mem_fun(*this, &View::rageClicked));
+    }
+    
     show_all();
     
     model_->subscribe(this);
@@ -76,8 +82,35 @@ View::View(Controller *c, Model *m) : controller_(c), model_(m){
 View::~View(){}
 
 void View::update(){
+    
+}
 
+void View::newGameClicked(){
+    // adds players to game
+    for (int i = 1; i <= 4; i++){
+        char type = 'h';
+        
+        
+        
+        controller_->addPlayer(i, type);
+    }
+    
+    //init methods - shuffle, deal, and find starting player
+    controller_->shuffle();
+    controller_->deal();
+    controller_->findStarter();
+    cout << "new";
+}
 
+void View::endGameClicked(){
+    controller_->save();
+    controller_->quit();
+    cout << "save";
+}
+
+void View::rageClicked(){
+    controller_->ragequit();
+    cout << "ragequit";
 }
 
 //print cards given boolean array
