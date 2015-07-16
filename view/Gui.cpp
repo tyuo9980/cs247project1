@@ -2,6 +2,12 @@
 #include <algorithm>
 #include <iterator>
 
+#ifdef __APPLE__
+    #define NAME_PREFIX  "/Users/peterli/desktop/school/cs247/straights/straights/"
+#elif __linux
+     #define NAME_PREFIX  ""
+#endif
+
 const char * image_names[] = {
     "img/0_0.png", "img/0_1.png", "img/0_2.png", "img/0_3.png",
     "img/0_4.png", "img/0_5.png", "img/0_6.png", "img/0_7.png",
@@ -24,7 +30,7 @@ const char * image_names[] = {
 
 // Loads the image from the specified file name into a pixel buffer.
 Glib::RefPtr<Gdk::Pixbuf> createPixbuf(const std::string & name) {
-    return Gdk::Pixbuf::create_from_file( "/Users/peterli/desktop/school/cs247/straights/straights/" + name );
+    return Gdk::Pixbuf::create_from_file( NAME_PREFIX + name );
 }
 
 Gui::Gui(){
