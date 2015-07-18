@@ -13,7 +13,7 @@ public:
     Controller(Model*);                         //constructor
     void shuffle();                             //shuffle deck
     void deal();                                //deal cards to players
-    void addPlayer(int, char);           //add player to list
+    void addPlayer(int, char);                  //add player to list
     void findStarter();                         //find starting player
     bool* getPlayedClubs();                     //return list of played clubs on table
     bool* getPlayedDiamonds();                  //return list of played diamonds on table

@@ -36,6 +36,11 @@ private:
     Gtk::HBox diamonds;
     Gtk::HBox clubs;
     
+    Gtk::Frame controlFrame;
+    Gtk::Frame tableFrame;
+    Gtk::Frame playerFrame;
+    Gtk::Frame handFrame;
+    
     Gtk::HBox controlPanel;
     Gtk::VBox table;
     Gtk::HBox players;
@@ -56,6 +61,7 @@ private:
     Gtk::Label points[4];
     Gtk::Label discards[4];
     
+    Gtk::Button playerHand[13];
     Gtk::Image playerCards[13];
 
     void newGameClicked();

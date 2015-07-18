@@ -1,6 +1,7 @@
 #include "Gui.h"
 #include <algorithm>
 #include <iterator>
+#include <iostream>
 
 const char * image_names[] = {
     "img/0_0.png", "img/0_1.png", "img/0_2.png", "img/0_3.png",
@@ -34,8 +35,9 @@ Gui::Gui(){
 Gui::~Gui(){}
 
 // Returns the image for the specified card.
-Glib::RefPtr<Gdk::Pixbuf> Gui::image( Rank f, Suit s ) {
-    int index = ((int) f)*4 + ((int) s );
+Glib::RefPtr<Gdk::Pixbuf> Gui::image(Rank f, Suit s) {
+    std::cout << deck.size();
+    int index = ((int)s) * 13 + ((int)f);
     return deck[index];
 }
 

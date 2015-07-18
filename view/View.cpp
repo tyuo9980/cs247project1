@@ -13,10 +13,20 @@ View::View(Controller *c, Model *m) : controller_(c), model_(m){
     
     add(vBox);
     
-    vBox.add(controlPanel);
-    vBox.add(table);
-    vBox.add(players);
-    vBox.add(hand);
+    vBox.add(controlFrame);
+    vBox.add(tableFrame);
+    vBox.add(playerFrame);
+    vBox.add(handFrame);
+    vBox.set_spacing(10);
+    
+    controlFrame.add(controlPanel);
+    controlFrame.set_label("Game Controls");
+    tableFrame.add(table);
+    tableFrame.set_label("Table");
+    playerFrame.add(players);
+    playerFrame.set_label("Players");
+    handFrame.add(hand);
+    handFrame.set_label("Hand");
     
     controlPanel.add(newGame);
     controlPanel.add(seed);
@@ -42,10 +52,10 @@ View::View(Controller *c, Model *m) : controller_(c), model_(m){
         hearts.add(heart[i]);
         spades.add(spade[i]);
         
-        club[i].set(gui_.null());
-        diamond[i].set(gui_.null());
-        heart[i].set(gui_.null());
-        spade[i].set(gui_.null());
+        club[i].set(gui_.image((Rank)i, CLUB));
+        diamond[i].set(gui_.image((Rank)i, DIAMOND));
+        heart[i].set(gui_.image((Rank)i, HEART));
+        spade[i].set(gui_.image((Rank)i, SPADE));
     }
     
     for (int i = 0; i < 4; i++){
@@ -63,8 +73,9 @@ View::View(Controller *c, Model *m) : controller_(c), model_(m){
     
     hand.set_spacing(10);
     for (int i = 0; i < 13; i++){
-        hand.add(playerCards[i]);
+        hand.add(playerHand[i]);
         playerCards[i].set(gui_.null());
+        playerHand[i].set_image(playerCards[i]);
     }
     
     newGame.signal_clicked().connect(sigc::mem_fun(*this, &View::newGameClicked));
@@ -81,11 +92,24 @@ View::View(Controller *c, Model *m) : controller_(c), model_(m){
 
 View::~View(){}
 
+void updateTable(){
+}
+
+void updatePlayers(){
+}
+
+void updateHand(){
+}
+
 void View::update(){
-    
+    updateTable();
+    updatePlayers();
+    updateHand();
 }
 
 void View::newGameClicked(){
+    //controller_->newGameEvent();
+    
     // adds players to game
     for (int i = 1; i <= 4; i++){
         char type = 'h';
@@ -103,12 +127,16 @@ void View::newGameClicked(){
 }
 
 void View::endGameClicked(){
+    //controller_->quitGameEvent();
+    
     controller_->save();
     controller_->quit();
     cout << "save";
 }
 
 void View::rageClicked(){
+    //controller_->rageEvent();
+    
     controller_->ragequit();
     cout << "ragequit";
 }
