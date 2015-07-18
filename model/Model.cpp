@@ -2,6 +2,8 @@
 #include <algorithm>
 #include "Model.h"
 
+using namespace std;
+
 //constructor
 Model::Model() : table_(new Table), deck_(new Deck){
 	for (int i = 0; i < NUMBER_PLAYERS; i++) {
@@ -13,6 +15,22 @@ Model::Model() : table_(new Table), deck_(new Deck){
 Model::~Model() {
 	quit();
 }
+
+void Model::newGame(int seed, bool players[]) {
+	quit();
+	table_ = new Table();
+	deck_ = new Deck();
+	for (int i = 0; i < 4; i++){
+        if (players[i] == true) addHuman(i);
+        else addComputer(i);
+    }
+    // set seeds
+	shuffle();
+	deal();
+	findStarter();
+	notify();
+}
+
 
 //shuffle deck
 void Model::shuffle() {
@@ -34,13 +52,13 @@ int Model::getPlayerID() {
 //add human player to game
 void Model::addHuman(int i) {
 	HumanPlayer* player = new HumanPlayer();
-	players_[i-1] = player;
+	players_[i] = player;
 }
 
 //add computer player to game
 void Model::addComputer(int i){
 	ComputerPlayer* player = new ComputerPlayer();
-	players_[i-1] = player;
+	players_[i] = player;
 }
 
 //find starting player - searches for 7 of spades
@@ -184,10 +202,10 @@ bool Model::playCard(string card){
     
 	players_[currPlayer_]->playCard(cCard);
 	table_->playCard(cCard);
-    
+    notify();
+	
 	++currPlayer_;
 	checkPlayer();
-    
     return true;
 }
 
@@ -200,7 +218,7 @@ string Model::computerPlayCard(){
     
     players_[currPlayer_]->playCard(*card);
     table_->playCard(*card);
-    
+	
 	++currPlayer_;
 	checkPlayer();
     
@@ -233,7 +251,8 @@ bool Model::discardCard(string card) {
 
 	Card cCard = Card(static_cast<Suit>(suit), static_cast<Rank>(rank));
 	players_[currPlayer_]->discardCard(cCard);
-    
+    notify();
+
 	++currPlayer_;
 	checkPlayer();
     
@@ -262,9 +281,12 @@ vector<Card*> Model::getDeck() {
 void Model::quit() {
 	delete table_;
 	delete deck_;
-	for (int i = 0; i < NUMBER_PLAYERS; ++i)
+	for (int i = 0; i < NUMBER_PLAYERS; ++i) {
 		delete players_[i];
+		players_[i] = NULL;
+	}
 
+	notify();
 }
 
 //ragequit - copies human player and creates a new computer player
@@ -274,7 +296,7 @@ void Model::rageQuit() {
 	ComputerPlayer* newPlayer = new ComputerPlayer(*humanPlayer);
 	delete formerPlayer;
 	players_[currPlayer_] = newPlayer;
-
+	notify();
 }
 
 //updates current player

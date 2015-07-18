@@ -9,17 +9,21 @@
 #include "Deck.h"
 #include "Table.h"
 #include "Player.h"
+#include "Subject.h"
 
-using namespace std;
 
 const int NUMBER_PLAYERS = 4;               //max number of players
 const string ranks[RANK_COUNT] = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" }; //maps card rank
 const string suits = "CDHS";                //maps card suit
 
-class Model {
+class Model : public Subject{
 public:
     Model();                                //constructor
 	~Model();                               //destructor
+	void newGame(int, bool[]);
+	
+
+	
 	void shuffle();                         //shuffle deck
 	void deal();                            //deal cards
 	void addHuman(int);                     //add human player to game
@@ -42,13 +46,13 @@ public:
     void resetRound();                      //resets round - clears table, reshuffle deck, redeal cards
 	bool isHuman();                         //check if current player is human
 	bool hasLegalPlays();                   //check if current player has legal plays
-	vector<Card*> getPlayerHand();          //get current player's hand accessor
-	vector<Card*> getPlayerLegalPlays();    //get current player's legal plays accessor
-	vector<Card*> getPlayerDiscards(int);   //get current player's discarded cards accessor
-	vector<Card*> getDeck();                //deck accessor
+	std::vector<Card*> getPlayerHand();          //get current player's hand accessor
+	std::vector<Card*> getPlayerLegalPlays();    //get current player's legal plays accessor
+	std::vector<Card*> getPlayerDiscards(int);   //get current player's discarded cards accessor
+	std::vector<Card*> getDeck();                //deck accessor
 	void checkPlayer();                     //keeps track of current player
 	void setSeed(int);                      //seed setter function for shuffle
-    vector<int> getWinners();               //returns list of winners
+    std::vector<int> getWinners();               //returns list of winners
 private:
 	Table* table_;                          //table data member
     Deck* deck_;                            //deck data member

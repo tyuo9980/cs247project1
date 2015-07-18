@@ -10,6 +10,21 @@ Controller::Controller(Model* m, int s) : model_(m){
     model_->setSeed(s);
 }
 
+void Controller::rageButtonClicked() {
+    ragequit();
+    int id = controller_->getPlayerID();
+    std::cout << "Player " << id << " ragequits. A computer will now take over." << endl;
+}
+void Controller::quitButtonClicked(){
+
+}
+
+
+void Controller::newGameButtonClicked(int seed, bool players[]) {
+    model_->newGame();  
+}
+
+
 //shuffle deck
 void Controller::shuffle(){
     model_->shuffle();
@@ -20,15 +35,6 @@ void Controller::deal(){
     model_->deal();
 }
 
-//add player to list
-void Controller::addPlayer(int i, char type){
-    if (type == 'h'){
-        model_->addHuman(i);
-    }
-    else{
-        model_->addComputer(i);
-    }
-}
 
 //find starting player
 void Controller::findStarter(){

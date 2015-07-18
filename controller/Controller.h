@@ -12,9 +12,12 @@ class Controller {
 public:
     Controller(Model*);                         //constructor
     Controller(Model*, int);                    //constructor
+    void newGameButtonClicked(int, bool[]);
+    void rageButtonClicked();
+    void quitButtonClicked();
+
     void shuffle();                             //shuffle deck
     void deal();                                //deal cards to players
-    void addPlayer(int, char);           //add player to list
     void findStarter();                         //find starting player
     bool* getPlayedClubs();                     //return list of played clubs on table
     bool* getPlayedDiamonds();                  //return list of played diamonds on table
@@ -39,6 +42,7 @@ public:
     int getScoreGained(int);                    //returns score of current round
     std::vector<int> getWinners();              //returns list of winners
 private:
+
     Model* model_;                              //access to model
 };
 

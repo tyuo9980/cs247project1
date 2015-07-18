@@ -7,6 +7,7 @@
 
 //constructor
 View::View(Controller *c) : controller_(c) {
+    model_->subscribe(this);
     newGame();
 }
 
@@ -35,28 +36,45 @@ void View::printCards(vector<Card*> cards){
     }
 }
 
-//starts game - main loop
-void View::newGame() {
-    
+void View::update(){
+    // update all the cards on table
+
+    // update all the card in current hands
+
+    // update scores
+}
+
+void View::newGameButtonClicked() {   
     // adds players to game
-    for (int i = 1; i <= 4; i++){
+    int seed = 0;
+    bool players[4];
+    for (int i = 0; i < 4; i++){
         char type;
         
         std::cout << "Is player "<< i << " a human(h) or a computer(c)?" << std::endl;
         std::cout << ">";
         std::cin >> type;
-		assert(type == 'c' || type == 'h');
-        controller_->addPlayer(i, type);
+        assert(type == 'c' || type == 'h');
+        if (type == 'c') players[i] = true;
+        else players[i] = false;
     }
     
     //init methods - shuffle, deal, and find starting player
-    controller_->shuffle();
-    controller_->deal();
-    controller_->findStarter();
+    controller_->newGameButtonClicked(seed, players);
+}
 
-	std::cout << "A new round begins. It's player " << controller_->getPlayerID() << "'s turn to play." << std::endl;
-    
-    //main game loop
+void View::rageButtonClicked(){
+    controller_->rageButtonClicked();
+}
+
+void View::quitButtonClicked(){
+    controller_->quitButtonClicked();
+}
+
+void View::newGame(){
+    newGameButtonClicked();
+    std::cout << "A new round begins. It's player " << controller_->getPlayerID() << "'s turn to play." << std::endl;
+   
     while (true){
         std::string cmd;
 
@@ -66,10 +84,10 @@ void View::newGame() {
                 int oldScore = controller_->getOldScore(i);
                 int scoreGained = controller_->getScoreGained(i);
                 
-				std::cout << "Player " << i << "'s discards: ";
+                std::cout << "Player " << i << "'s discards: ";
                 printCards(controller_->getPlayerDiscards(i));
                 std::cout << endl;
-				std::cout << "Player " << i << "'s score: ";
+                std::cout << "Player " << i << "'s score: ";
                 std::cout << oldScore << " + " << scoreGained << " = " << oldScore + scoreGained << std::endl;
             }
             
@@ -91,6 +109,7 @@ void View::newGame() {
         bool human = controller_->checkHumanPlayer();
         
         if (human){
+            // update it in update() when adding buttonts
             //prints stats for human player
             std::cout << "Cards on the table:" << std::endl;
             std::cout << "Clubs:";
@@ -151,11 +170,11 @@ void View::newGame() {
                     printCards(controller_->getDeck());
                 }
                 else if (cmd == "quit"){
+                    quitButtonClicked();
                     return;
                 }
                 else if (cmd == "ragequit"){
-                    controller_->ragequit();
-                    cout << "Player " << id << " ragequits. A computer will now take over." << endl;
+                    rageButtonClicked();
                     break;
                 }
             }
@@ -173,4 +192,5 @@ void View::newGame() {
             }
         }
     }
-}
+
+} 
