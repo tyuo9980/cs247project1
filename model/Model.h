@@ -40,7 +40,8 @@ public:
     void rageQuit(int);                     //replace human player with computer player
     void newGame(int, char[]);              //starts new game
     void cardAction(int);                   //decides whether to play or discard a card
-    
+    void checkGameOver();                   //checks if game/round is over
+    bool roundReset();
 private:
     void shuffle();                         //shuffle deck
     void deal();                            //deal cards
@@ -58,7 +59,7 @@ private:
     void playCard(Card);                    //plays a given card
     void discardCard(Card);                 //discards a certain card
     void incrementPlayer();                 //changes game state, updates current player
-    void checkGameOver();                   //checks if game/round is over
+    
 
 	Table* table_;                          //table data member
     Deck* deck_;                            //deck data member
@@ -67,6 +68,7 @@ private:
     bool inProgress_;                       //game is current in progress
 	int validRank(string);                  //check if rank is in range
 	int validSuit(char);                    //check if suit is valid
+    bool newRound_;
 };
 
 

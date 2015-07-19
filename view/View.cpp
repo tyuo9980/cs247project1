@@ -202,6 +202,13 @@ void View::update(){
             dialog.run();
         }
     }
+
+    if (model_->roundReset()) {
+        Gtk::MessageDialog dialog("New Round", false, Gtk::MESSAGE_INFO, Gtk::BUTTONS_OK);
+        dialog.set_secondary_text("New round starts!");
+        dialog.set_default_response(Gtk::RESPONSE_YES);
+        dialog.run();
+    }
 }
 
 //clicked on new game button

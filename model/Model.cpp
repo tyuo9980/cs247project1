@@ -9,6 +9,7 @@ Model::Model() : table_(new Table), deck_(new Deck){
 	}
     
     inProgress_ = false;
+    newRound_ =false;
 }
 
 //destructor
@@ -118,18 +119,26 @@ bool* Model::getHearts() {
 bool* Model::getSpades() {
 	return table_->getSpades();
 }
+bool Model::roundReset() {
+    return newRound_;
+}
 
 //checks if round/game is over
 void Model::checkGameOver(){
+    newRound_ = false;
     if (isGameOver()){
         vector<int> winners = getWinners();
         
         if (winners.size() > 0){
+            // the game is over
             return;
         }
         
         resetRound();
+        newRound_ = true;
+        // the game is not over a new round starts
     }
+    // the round is not over
 }
 
 //checks if the round is over
