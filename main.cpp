@@ -1,5 +1,3 @@
-
-
 #include <gtkmm/main.h>
 #include <stdlib.h>
 #include "model/Model.h"

@@ -75,8 +75,9 @@ View::View(Controller *c, Model *m) : controller_(c), model_(m){
         player[i].add(total[i]);
         player[i].add(discards[i]);
 
-        name[i].set_label("Player " + to_string(i));
+        name[i].set_label("Player " + to_string(i + 1));
         playerType[i].set_label("Human?");
+        playerType[i].set_active(true);
         rage[i].set_label("Rage");
         rage[i].set_sensitive(false);
         points[i].set_label("Current Points: 0");
