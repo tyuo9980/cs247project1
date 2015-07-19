@@ -8,6 +8,7 @@
 
 //constructor
 View::View(Controller *c, Model *m) : controller_(c), model_(m){
+    //sets up gui structure
     set_title("Straights!");
     set_border_width( 10 );
     
@@ -28,12 +29,17 @@ View::View(Controller *c, Model *m) : controller_(c), model_(m){
     handFrame.add(hand);
     handFrame.set_label("Hand");
     
+    //control frame
     controlPanel.add(newGame);
     controlPanel.add(seed);
     controlPanel.add(endGame);
-    newGame.set_label("new game");
-    endGame.set_label("end game");
+    newGame.set_label("New Game");
+    seed.set_numeric();
+    seed.set_range(0, 1000000000);
+    seed.set_increments(1, 1);
+    endGame.set_label("End Game");
     
+    //table frame
     table.add(clubs);
     table.add(diamonds);
     table.add(hearts);
@@ -52,256 +58,172 @@ View::View(Controller *c, Model *m) : controller_(c), model_(m){
         hearts.add(heart[i]);
         spades.add(spade[i]);
         
-        club[i].set(gui_.image((Rank)i, CLUB));
-        diamond[i].set(gui_.image((Rank)i, DIAMOND));
-        heart[i].set(gui_.image((Rank)i, HEART));
-        spade[i].set(gui_.image((Rank)i, SPADE));
+        club[i].set(gui_.null());
+        diamond[i].set(gui_.null());
+        heart[i].set(gui_.null());
+        spade[i].set(gui_.null());
     }
     
+    //player frame
     for (int i = 0; i < 4; i++){
         players.add(player[i]);
         player[i].add(name[i]);
+        player[i].add(playerType[i]);
         player[i].add(rage[i]);
         player[i].add(points[i]);
+        player[i].add(oldPoints[i]);
+        player[i].add(total[i]);
         player[i].add(discards[i]);
-        
+
         name[i].set_label("Player " + to_string(i));
+        playerType[i].set_label("Human?");
         rage[i].set_label("Rage");
-        points[i].set_label("Points: 0");
+        rage[i].set_sensitive(false);
+        points[i].set_label("Current Points: 0");
+        oldPoints[i].set_label("Previous Points: 0");
+        total[i].set_label("Total Points: 0");
         discards[i].set_label("Discards: 0");
     }
     
+    //current hand frame
     hand.set_spacing(10);
     for (int i = 0; i < 13; i++){
         hand.add(playerHand[i]);
         playerCards[i].set(gui_.null());
         playerHand[i].set_image(playerCards[i]);
+        playerHand[i].set_sensitive(false);
     }
     
+    //button click listeners
     newGame.signal_clicked().connect(sigc::mem_fun(*this, &View::newGameClicked));
-    endGame.signal_clicked().connect(sigc::mem_fun(*this, &View::endGameClicked));
+    endGame.signal_clicked().connect(sigc::ptr_fun(Gtk::Main::quit));
     for (int i = 0; i < 4; i++){
-        rage[i].signal_clicked().connect(sigc::mem_fun(*this, &View::rageClicked));
+        rage[i].signal_clicked().connect(sigc::bind<int>(sigc::mem_fun(*this, &View::rageClicked), i));
+    }
+    for (int i = 0; i < 13; i++){
+        playerHand[i].signal_clicked().connect(sigc::bind<int>(sigc::mem_fun(*this, &View::cardClicked), i));
     }
     
+    //displays all UI elements
     show_all();
     
+    //subscribes to model
     model_->subscribe(this);
-    //startGame();
 }
 
 View::~View(){}
 
-void updateTable(){
-}
-
-void updatePlayers(){
-}
-
-void updateHand(){
-}
-
 void View::update(){
-    updateTable();
-    updatePlayers();
-    updateHand();
-}
-
-void View::newGameClicked(){
-    //controller_->newGameEvent();
+    //update Table
+    bool* h = model_->getHearts();
+    bool* d = model_->getDiamonds();
+    bool* s = model_->getSpades();
+    bool* c = model_->getClubs();
     
-    // adds players to game
-    for (int i = 1; i <= 4; i++){
-        char type = 'h';
-        
-        
-        
-        controller_->addPlayer(i, type);
-    }
-    
-    //init methods - shuffle, deal, and find starting player
-    controller_->shuffle();
-    controller_->deal();
-    controller_->findStarter();
-    cout << "new";
-}
-
-void View::endGameClicked(){
-    //controller_->quitGameEvent();
-    
-    controller_->save();
-    controller_->quit();
-    cout << "save";
-}
-
-void View::rageClicked(){
-    //controller_->rageEvent();
-    
-    controller_->ragequit();
-    cout << "ragequit";
-}
-
-//print cards given boolean array
-void View::printCards(bool cards[]){
     for (int i = 0; i < 13; i++){
-        if (cards[i]){
-            cout << " " << cardName_[i] ;
-        }
-    }
-}
-
-//print cards given vector of cards
-void View::printCards(vector<Card*> cards){
-	if (cards.size() == 0) return;
-    for (int i = 0; i < cards.size(); i++){
-        cout << *cards.at(i);
-        
-        if (i < cards.size() - 1){
-            cout << " ";
-        }
-        
-        if ((i + 1) % 13 == 0 && i != cards.size() - 1){
-            cout << endl;
-        }
-    }
-}
-
-//starts game - main loop
-void View::startGame() {
-    
-    // adds players to game
-    for (int i = 1; i <= 4; i++){
-        char type;
-        
-        std::cout << "Is player "<< i << " a human(h) or a computer(c)?" << std::endl;
-        std::cout << ">";
-        std::cin >> type;
-		assert(type == 'c' || type == 'h');
-        controller_->addPlayer(i, type);
+        club[i].set(gui_.null());
+        diamond[i].set(gui_.null());
+        heart[i].set(gui_.null());
+        spade[i].set(gui_.null());
     }
     
-    //init methods - shuffle, deal, and find starting player
-    controller_->shuffle();
-    controller_->deal();
-    controller_->findStarter();
-
-	std::cout << "A new round begins. It's player " << controller_->getPlayerID() << "'s turn to play." << std::endl;
-    
-    //main game loop
-    while (true){
-        std::string cmd;
-
-        //checks for game status - game is over or new round
-        if (controller_->checkGameOver()){
-            for (int i = 1; i <= 4; i++){
-                int oldScore = controller_->getOldScore(i);
-                int scoreGained = controller_->getScoreGained(i);
-                
-				std::cout << "Player " << i << "'s discards: ";
-                printCards(controller_->getPlayerDiscards(i));
-                std::cout << endl;
-				std::cout << "Player " << i << "'s score: ";
-                std::cout << oldScore << " + " << scoreGained << " = " << oldScore + scoreGained << std::endl;
-            }
-            
-            vector<int> winners = controller_->getWinners();
-            for (int i = 0 ; i < winners.size(); i++){
-                std::cout << "Player " << winners.at(i) << " wins!" << endl;
-            }
-            
-            if (winners.size() > 0){
-                return;
-            }
-            
-            controller_->resetRound();
-            
-            std::cout << "A new round begins. It's player " << controller_->getPlayerID() << "'s turn to play." << std::endl;
+    for (int i = 0; i < 13; i++){
+        if (h[i]){
+            heart[i].set(gui_.image((Rank)i, HEART));
         }
+        if (d[i]){
+            diamond[i].set(gui_.image((Rank)i, DIAMOND));
+        }
+        if (s[i]){
+            spade[i].set(gui_.image((Rank)i, SPADE));
+        }
+        if (c[i]){
+            club[i].set(gui_.image((Rank)i, CLUB));
+        }
+    }
+    
+    //update players
+    for (int i = 0; i < 4; i++){
+        int oldScore = model_->getOldScore(i + 1);
+        int scoreGained = model_->getScoreGained(i + 1);
+        int numDiscards = model_->getPlayerDiscards(i + 1).size();
+        bool human = model_->isHuman(i + 1);
         
-        int id = controller_->getPlayerID();
-        bool human = controller_->checkHumanPlayer();
+        points[i].set_label("Current Points: " + to_string(scoreGained));
+        oldPoints[i].set_label("Previous Points: " + to_string(oldScore));
+        total[i].set_label("Total Points: " + to_string(scoreGained + oldScore));
+        discards[i].set_label("Discards: " + to_string(numDiscards));
         
         if (human){
-            //prints stats for human player
-            std::cout << "Cards on the table:" << std::endl;
-            std::cout << "Clubs:";
-            printCards(controller_->getPlayedClubs());
-            std::cout << std::endl;
-            
-            std::cout << "Diamonds:";
-            printCards(controller_->getPlayedDiamonds());
-            std::cout << std::endl;
-            
-            std::cout << "Hearts:";
-            printCards(controller_->getPlayedHearts());
-            std::cout << std::endl;
-            
-            std::cout << "Spades:";
-            printCards(controller_->getPlayedSpades());
-            std::cout << std::endl;
-            
-            std::cout << "Your hand: ";
-            printCards(controller_->getPlayerHand());
-            std::cout << std::endl;
-            
-            std::cout << "Legal plays: ";
-            printCards(controller_->getPlayerLegalPlays());
-            
-            while (true){
-                std::cout << std::endl;
-                std::cout << ">";
-                
-                std::cin >> cmd;
-                
-                //handles commands
-                if (cmd == "play"){
-                    std::string card;
-                    cin >> card;
-                    
-                    if (controller_->playCard(card)){
-                        std::cout << "Player " << id << " plays " << card << "." << endl;
-                        break;
-                    }
-                    else{
-                        std::cout << "This is not a legal play.";
-                    }
-                }
-                else if (cmd == "discard"){
-                    std::string card;
-                    cin >> card;
-                    
-                    if (controller_->discardCard(card)){
-                        std::cout << "Player " << id << " discards " << card << "." << endl;
-                        break;
-                    }
-                    else{
-                        std::cout << "You have a legal play. You may not discard.";
-                    }
-                }
-                else if (cmd == "deck"){
-                    printCards(controller_->getDeck());
-                }
-                else if (cmd == "quit"){
-                    return;
-                }
-                else if (cmd == "ragequit"){
-                    controller_->ragequit();
-                    cout << "Player " << id << " ragequits. A computer will now take over." << endl;
-                    break;
-                }
-            }
+            rage[i].set_sensitive(true);
+            playerType[i].set_active(true);
         }
-        
-        //computer player
-        if (!human){
-            if (controller_->hasLegalPlay()){
-                std::string card = controller_->playCard();
-                cout << "Player " << id << " plays " << card << "." << endl;
-            }
-            else{
-                std::string card = controller_->discardCard();
-                cout << "Player " << id << " discards " << card << "." << endl;
-            }
+        else{
+            rage[i].set_sensitive(false);
+            playerType[i].set_active(false);
         }
     }
+        
+    //update hand
+    for (int i = 0; i < 13; i++){
+        playerCards[i].set(gui_.null());
+        playerHand[i].set_sensitive(false);
+    }
+    
+    string status = "Discard a card";
+    bool hasLegalPlay = model_->hasLegalPlays();
+    vector<Card*> hand = model_->getPlayerHand();
+    for (int i = 0; i < hand.size(); i++){
+        Card* card = hand.at(i);
+        Rank rank = card->getRank();
+        Suit suit = card->getSuit();
+        
+        playerCards[i].set(gui_.image(rank, suit));
+        if (hasLegalPlay && model_->isLegalPlay(*card)){
+            playerHand[i].set_sensitive(true);
+            status = "Play a card";
+        }
+        else if (!hasLegalPlay){
+            playerHand[i].set_sensitive(true);
+        }
+    }
+    
+    int curr = model_->getPlayerID();
+    handFrame.set_label("Player " + to_string(curr) + "'s hand - " + status);
+    
+    //output game over dialogues
+    if (model_->isGameOver()){
+        vector<int> winners = model_->getWinners();
+        for (int i = 0 ; i < winners.size(); i++){
+            Gtk::MessageDialog dialog("Game Over!", false, Gtk::MESSAGE_INFO, Gtk::BUTTONS_OK);
+            dialog.set_secondary_text("Player " + to_string(winners.at(i)) + " wins!");
+            dialog.set_default_response(Gtk::RESPONSE_YES);
+            dialog.run();
+        }
+    }
+}
+
+//clicked on new game button
+void View::newGameClicked(){
+    char type[4];
+    for (int i = 0; i < 4; i ++){
+        if (playerType[i].get_active()){
+            type[i] = 'h';
+        }
+        else{
+            type[i] = 'c';
+        }
+    }
+    
+    controller_->newGameButtonClicked(seed.get_value_as_int(), type);
+}
+
+//clicked on rage button
+void View::rageClicked(int i){
+    controller_->rageButtonClicked(i);
+}
+
+//clicked on card button
+void View::cardClicked(int i){
+    controller_->cardButtonClicked(i);
 }

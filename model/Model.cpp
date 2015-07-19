@@ -7,11 +7,55 @@ Model::Model() : table_(new Table), deck_(new Deck){
 	for (int i = 0; i < NUMBER_PLAYERS; i++) {
 		players_[i] = NULL;
 	}
+    
+    inProgress_ = false;
 }
 
 //destructor
 Model::~Model() {
 	quit();
+}
+
+//starts a new game
+void Model::newGame(int seed, char playerType[]){
+    setSeed(seed);
+    
+    //resets game
+    if (inProgress_){
+        resetGame();
+    }
+
+    //adds players to game
+    for (int i = 1; i <= 4; i++){
+        if (playerType[i - 1] == 'h'){
+            addHuman(i);
+        }
+        else{
+            addComputer(i);
+        }
+    }
+    
+    inProgress_ = true;
+    
+    shuffle();
+    deal();
+    findStarter();
+    checkPlayer();
+    notify();
+}
+
+//decides whether to play or discard a card
+void Model::cardAction(int index){
+    Card* card = getPlayerHand().at(index);
+    
+    if (isLegalPlay(*card)){
+        playCard(*card);
+    }
+    else{
+        discardCard(*card);
+    }
+    
+    checkGameOver();
 }
 
 //shuffle deck
@@ -75,6 +119,19 @@ bool* Model::getSpades() {
 	return table_->getSpades();
 }
 
+//checks if round/game is over
+void Model::checkGameOver(){
+    if (isGameOver()){
+        vector<int> winners = getWinners();
+        
+        if (winners.size() > 0){
+            return;
+        }
+        
+        resetRound();
+    }
+}
+
 //checks if the round is over
 bool Model::isGameOver(){
     // check all cards are played
@@ -87,6 +144,16 @@ bool Model::isGameOver(){
     return true;
 }
 
+//resets the game - resets round and players
+void Model::resetGame(){
+    table_->resetTable();
+    
+    for (int i = 0; i < NUMBER_PLAYERS; ++i) {
+        players_[i]->resetPlayer();
+        delete players_[i];
+    }
+}
+
 //resets the round - shuffles deck, deals cards, clears table
 void Model::resetRound(){
     table_->resetTable();
@@ -95,7 +162,7 @@ void Model::resetRound(){
         players_[i]->resetPlayer();
     }
     
-    deck_->shuffle();
+    shuffle();
     deal();
     findStarter();
 }
@@ -153,6 +220,10 @@ bool Model::isHuman() {
 	return players_[currPlayer_]->isHuman();
 }
 
+bool Model::isHuman(int i) {
+    return players_[i - 1]->isHuman();
+}
+
 //checks if rank is valid/within range
 int Model::validRank(string rank) {
     for (int i = 0; i < RANK_COUNT; i++) {
@@ -171,86 +242,57 @@ int Model::validSuit(char suit) {
     return -1;
 }
 
-//plays card for human player - removes card from hand and moves to table
-bool Model::playCard(string card){
-	if (!(card.length() == 2 || card.length() == 3)) return false;
-	int rank = validRank(card.substr(0, card.length() - 1));
-	int suit = validSuit(card[card.length() - 1]);
-
-	if (rank == -1 || suit == -1) return false;
-
-	Card cCard = Card(static_cast<Suit>(suit), static_cast<Rank>(rank));
-	if (!isLegalPlay(cCard)) return false;
-    
-	players_[currPlayer_]->playCard(cCard);
-	table_->playCard(cCard);
-    
-	++currPlayer_;
-	checkPlayer();
-    
-    return true;
-}
-
-//plays card for computer player - removes first card from hand and moves to table
-string Model::computerPlayCard(){
-	vector<Card*> legalPlays = getPlayerLegalPlays();
-    Card* card = legalPlays.at(0);
-    int rank = static_cast<int>(card->getRank());
-    int suit = static_cast<int>(card->getSuit());
-    
-    players_[currPlayer_]->playCard(*card);
-    table_->playCard(*card);
-    
-	++currPlayer_;
-	checkPlayer();
-    
-    return ranks[rank] + suits[suit];
-}
-
 //checks if card is a legal play
 bool Model::isLegalPlay(Card card) {
-	vector<Card*> legalPlays = getPlayerLegalPlays();
-	for (vector<Card*>::iterator it = legalPlays.begin(); it != legalPlays.end(); ++it) {
-		if (**it == card) return true;
-	}
-	return false;
+    vector<Card*> legalPlays = getPlayerLegalPlays();
+    for (vector<Card*>::iterator it = legalPlays.begin(); it != legalPlays.end(); ++it) {
+        if (**it == card) return true;
+    }
+    return false;
 }
 
 //checks if player has legal plays
 bool Model::hasLegalPlays() {
+    vector<Card*> legalPlays = getPlayerLegalPlays();
+    return (legalPlays.size() != 0);
+}
+
+//plays card for human player - removes card from hand and moves to table
+void Model::playCard(Card card){
+    players_[currPlayer_]->playCard(card);
+    table_->playCard(card);
+    
+    incrementPlayer();
+    checkPlayer();
+    notify();
+}
+
+//plays card for computer player - removes first card from hand and moves to table
+void Model::computerPlayCard(){
 	vector<Card*> legalPlays = getPlayerLegalPlays();
-	return (legalPlays.size() != 0);
+    Card* card = legalPlays.at(0);
+    
+    players_[currPlayer_]->playCard(*card);
+    table_->playCard(*card);
+    
+    incrementPlayer();
 }
 
 //discard card for human player - removes card from hand and moves it to the discarded pile
-bool Model::discardCard(string card) {
-    if (hasLegalPlays()) return false;
-    if (!(card.length() == 2 || card.length() == 3)) return false;
-	int rank = validRank(card.substr(0, card.length() - 1));
-	int suit = validSuit(card[card.length() - 1]);
-
-	if (rank == -1 || suit == -1) return false;
-
-	Card cCard = Card(static_cast<Suit>(suit), static_cast<Rank>(rank));
-	players_[currPlayer_]->discardCard(cCard);
+void Model::discardCard(Card card){
+    players_[currPlayer_]->discardCard(card);
     
-	++currPlayer_;
-	checkPlayer();
-    
-    return true;
+    incrementPlayer();
+    checkPlayer();
+    notify();
 }
 
 //discard card for computer player - removes first card from hand and moves it to the discarded pile
-string Model::computerDiscardCard() {
+void Model::computerDiscardCard() {
 	Card* card = players_[currPlayer_]->getHand().at(0);
-	int rank = static_cast<int>(card->getRank());
-	int suit = static_cast<int>(card->getSuit());
     players_[currPlayer_]->discardCard(*card);
     
-    ++currPlayer_;
-    checkPlayer();
-    
-	return ranks[rank] + suits[suit];
+    incrementPlayer();
 }
 
 //deck accessor
@@ -262,24 +304,45 @@ vector<Card*> Model::getDeck() {
 void Model::quit() {
 	delete table_;
 	delete deck_;
-	for (int i = 0; i < NUMBER_PLAYERS; ++i)
+    
+    for (int i = 0; i < NUMBER_PLAYERS; ++i){
 		delete players_[i];
-
+    }
 }
 
 //ragequit - copies human player and creates a new computer player
-void Model::rageQuit() {
-	Player* formerPlayer = players_[currPlayer_];
+void Model::rageQuit(int i) {
+	Player* formerPlayer = players_[i];
 	HumanPlayer* humanPlayer = dynamic_cast<HumanPlayer*>(formerPlayer);
 	ComputerPlayer* newPlayer = new ComputerPlayer(*humanPlayer);
+    
 	delete formerPlayer;
-	players_[currPlayer_] = newPlayer;
+	players_[i] = newPlayer;
 
+    checkPlayer();
+    notify();
 }
 
-//updates current player
-void Model::checkPlayer() {
+//updates game state and current player
+void Model::incrementPlayer(){
+    currPlayer_++;
     currPlayer_ %= NUMBER_PLAYERS;
+}
+
+//checks current player for computer
+void Model::checkPlayer() {
+    checkGameOver();
+    
+    if (!isHuman() && !isGameOver()){
+        if (hasLegalPlays()){
+            computerPlayCard();
+        }
+        else{
+            computerDiscardCard();
+        }
+        
+        checkPlayer();
+    }
 }
 
 //seed setter

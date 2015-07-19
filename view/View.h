@@ -20,15 +20,15 @@ class View : public Gtk::Window, public Observer{
 public:
     View(Controller*, Model*);                                  //contructor
     virtual ~View();                                            //destructor
-    virtual void update();
+    virtual void update();                                      //update gui
     
 private:
     Controller* controller_;                                    //access to controller
     Model* model_;                                              //access to model
     
-    Gui gui_;
+    Gui gui_;                                                   //deck gui
     
-    Gtk::VBox vBox;                                             // Main window divided into 4 components
+    Gtk::VBox vBox;                                             //main window divided into 4 components
     
     Gtk::VBox suits;
     Gtk::HBox hearts;
@@ -48,7 +48,7 @@ private:
     Gtk::HBox hand;
     
     Gtk::Button newGame;
-    Gtk::Entry seed;
+    Gtk::SpinButton seed;
     Gtk::Button endGame;
     
     Gtk::Image heart[13];
@@ -56,22 +56,20 @@ private:
     Gtk::Image diamond[13];
     Gtk::Image club[13];
     
+    Gtk::CheckButton playerType[4];
     Gtk::Label name[4];
     Gtk::Button rage[4];
     Gtk::Label points[4];
+    Gtk::Label oldPoints[4];
+    Gtk::Label total[4];
     Gtk::Label discards[4];
     
     Gtk::Button playerHand[13];
     Gtk::Image playerCards[13];
 
-    void newGameClicked();
-    void endGameClicked();
-    void rageClicked();
-    
-    void printCards(bool[]);                                    //print cards given boolean array
-    void printCards(std::vector<Card*>);                        //print cards given vector of cards
-    void startGame();                                             //starts game - main loop
-    
+    void newGameClicked();                                      //new game button click event
+    void rageClicked(int);                                      //rage button click event
+    void cardClicked(int);                                      //card button click event
 };
 
 #endif

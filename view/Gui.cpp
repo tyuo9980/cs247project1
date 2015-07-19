@@ -31,7 +31,7 @@ const char * image_names[] = {
 
 // Loads the image from the specified file name into a pixel buffer.
 Glib::RefPtr<Gdk::Pixbuf> createPixbuf(const std::string & name) {
-    return Gdk::Pixbuf::create_from_file( NAME_PREFIX + name );
+    return Gdk::Pixbuf::create_from_file(NAME_PREFIX + name);
 }
 
 Gui::Gui(){
@@ -42,7 +42,6 @@ Gui::~Gui(){}
 
 // Returns the image for the specified card.
 Glib::RefPtr<Gdk::Pixbuf> Gui::image(Rank f, Suit s) {
-    std::cout << deck.size();
     int index = ((int)s) * 13 + ((int)f);
     return deck[index];
 }

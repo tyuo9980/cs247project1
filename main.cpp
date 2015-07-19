@@ -10,11 +10,6 @@ int main(int argc, char * argv[]) {
     Gtk::Main kit(argc, argv);
 
     Model model;                                        //create model
-    
-    if (argc == 2){
-        model.setSeed(atoi(argv[1]));
-    }
-    
     Controller controller(&model);                      //create controller
     View view(&controller, &model);                     //create view
     Gtk::Main::run(view);
