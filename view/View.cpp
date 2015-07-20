@@ -195,19 +195,39 @@ void View::update(){
     //output game over dialogues
     if (model_->isGameOver()){
         vector<int> winners = model_->getWinners();
+        vector<Card*> p1 = model_->getPlayerDiscards(1);
+        vector<Card*> p2 = model_->getPlayerDiscards(2);
+        vector<Card*> p3 = model_->getPlayerDiscards(3);
+        vector<Card*> p4 = model_->getPlayerDiscards(4);
+        
+        string output;
+        Gtk::MessageDialog dialog2("End of Round", false, Gtk::MESSAGE_INFO, Gtk::BUTTONS_OK);
+        output += "Player 1 Discards:\n";
+        for (int i = 0; i < p1.size(); i++){
+            output += p1.at(i)->getString() + " ";
+        }
+        output += "\n\nPlayer 2 Discards:\n";
+        for (int i = 0; i < p2.size(); i++){
+            output += p2.at(i)->getString() + " ";
+        }
+        output += "\n\nPlayer 3 Discards:\n";
+        for (int i = 0; i < p3.size(); i++){
+            output += p3.at(i)->getString() + " ";
+        }
+        output += "\n\nPlayer 4 Discards:\n";
+        for (int i = 0; i < p4.size(); i++){
+            output += p4.at(i)->getString() + " ";
+        }
+        dialog2.set_secondary_text(output);
+        dialog2.set_default_response(Gtk::RESPONSE_YES);
+        dialog2.run();
+        
         for (int i = 0 ; i < winners.size(); i++){
             Gtk::MessageDialog dialog("Game Over!", false, Gtk::MESSAGE_INFO, Gtk::BUTTONS_OK);
             dialog.set_secondary_text("Player " + to_string(winners.at(i)) + " wins!");
             dialog.set_default_response(Gtk::RESPONSE_YES);
             dialog.run();
         }
-    }
-
-    if (model_->roundReset()) {
-        Gtk::MessageDialog dialog("New Round", false, Gtk::MESSAGE_INFO, Gtk::BUTTONS_OK);
-        dialog.set_secondary_text("New round starts!");
-        dialog.set_default_response(Gtk::RESPONSE_YES);
-        dialog.run();
     }
 }
 

@@ -1,0 +1,1 @@
+Visual cues - unplayable cards are greyed out.

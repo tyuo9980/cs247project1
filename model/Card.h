@@ -15,6 +15,7 @@ public:
 	Card(Suit, Rank);                                       //constructor
 	Suit getSuit() const;                                   //suit accessor
 	Rank getRank() const;                                   //rank accessor
+    std::string getString() const;                               //card accessor in string
 	
 private:
 	Suit suit_;                                             //suit member var
